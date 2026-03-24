@@ -1931,6 +1931,7 @@
         // Hide error and proceed
         nameError.classList.remove("visible");
         document.getElementById("infoScreen").style.display = "none";
+        document.getElementById("leaderboardCard").classList.remove("active");
         document.getElementById("questionCard").classList.add("active");
         showQuestion();
       }
@@ -2178,9 +2179,8 @@
         score = 0;
         answered = false;
 
-        // Hide results and leaderboard
+        // Hide results
         document.getElementById("resultsCard").classList.remove("active");
-        document.getElementById("leaderboardCard").classList.remove("active");
 
         // Show info screen again
         document.getElementById("infoScreen").style.display = "block";
@@ -2197,6 +2197,11 @@
 
         // Scroll to top
         window.scrollTo({ top: 0, behavior: "smooth" });
+
+        // Keep leaderboard visible for reference
+        setTimeout(() => {
+          renderLeaderboard(true);
+        }, 300);
       }
 
       // Allow Enter key to submit
@@ -2218,6 +2223,9 @@
             }
           });
         }
+
+        // Load and display leaderboard on page load
+        renderLeaderboard(true);
       });
 
       function showQuestion() {
