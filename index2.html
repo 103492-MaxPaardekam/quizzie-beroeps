@@ -1,0 +1,2266 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kennisquiz — Gemeente Otterdam</title>
+    <meta
+      name="description"
+      content="Interactieve educatieve quiz over duurzaamheid en lokaal bestuur in Gemeente Otterdam"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============================================
+         QUIZZIE — Gemeente Otterdam — REDESIGN
+         Aesthetic: Civic Grandeur / Editorial Precision
+         ============================================ */
+
+      :root {
+        --ink: oklch(14% 0.02 260);
+        --ink-muted: oklch(38% 0.03 260);
+        --ink-faint: oklch(58% 0.02 260);
+        --paper: oklch(97% 0.005 80);
+        --paper-warm: oklch(94% 0.01 80);
+        --rule: oklch(88% 0.008 80);
+
+        --gold: oklch(72% 0.16 80);
+        --gold-deep: oklch(58% 0.14 70);
+        --gold-light: oklch(88% 0.08 80);
+        --green: oklch(55% 0.16 155);
+        --green-deep: oklch(40% 0.14 155);
+        --green-light: oklch(92% 0.06 150);
+        --blue: oklch(44% 0.15 255);
+        --blue-light: oklch(92% 0.05 255);
+
+        --font-display: "Fraunces", Georgia, serif;
+        --font-body: "DM Sans", system-ui, sans-serif;
+
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        font-size: 16px;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      /* ─── SCROLLBAR ─── */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--paper);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--gold);
+        border-radius: 99px;
+      }
+
+      /* ─── SELECTION ─── */
+      ::selection {
+        background: var(--gold-light);
+        color: var(--ink);
+      }
+
+      /* ─── CONTAINER ─── */
+      .wrap {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 0 clamp(1.5rem, 5vw, 4rem);
+      }
+
+      /* ============================================
+         NAVIGATION
+         ============================================ */
+      .nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 999;
+        padding: 0;
+        transition:
+          background 0.4s,
+          box-shadow 0.4s;
+      }
+
+      .nav.scrolled {
+        background: oklch(97% 0.005 80 / 0.95);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 1px 0 var(--rule);
+      }
+
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 76px;
+        border-bottom: 1px solid oklch(100% 0 0 / 0.15);
+        transition: border-color 0.4s;
+      }
+
+      .nav.scrolled .nav-inner {
+        border-bottom-color: transparent;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: -0.01em;
+        color: white;
+        transition: color 0.4s;
+      }
+
+      .nav.scrolled .nav-logo {
+        color: var(--ink);
+      }
+
+      .nav-logo-mark {
+        width: 38px;
+        height: 38px;
+        background: var(--gold);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 2px 12px oklch(72% 0.16 80 / 0.4);
+        transition: transform 0.3s var(--ease-bounce);
+      }
+
+      .nav-logo:hover .nav-logo-mark {
+        transform: rotate(-8deg) scale(1.1);
+      }
+
+      .nav-logo-mark svg {
+        width: 20px;
+        height: 20px;
+        color: var(--ink);
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 0.25rem;
+      }
+
+      .nav-links a {
+        padding: 0.5rem 1.1rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: oklch(100% 0 0 / 0.75);
+        letter-spacing: 0.01em;
+        transition: all 0.2s;
+      }
+
+      .nav.scrolled .nav-links a {
+        color: var(--ink-muted);
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--ink);
+        background: oklch(100% 0 0 / 0.15);
+      }
+
+      .nav.scrolled .nav-links a:hover,
+      .nav.scrolled .nav-links a.active {
+        background: var(--gold-light);
+        color: var(--gold-deep);
+      }
+
+      /* ============================================
+         HERO — FULL HEIGHT, EDITORIAL ARCHITECTURE
+         ============================================ */
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        overflow: hidden;
+        background: var(--ink);
+      }
+
+      /* Large geometric background */
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+
+      .hero-bg-arch {
+        position: absolute;
+        bottom: -10%;
+        right: -5%;
+        width: 65%;
+        height: 130%;
+        background: linear-gradient(
+          160deg,
+          oklch(20% 0.04 260) 0%,
+          oklch(16% 0.03 260) 100%
+        );
+        clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%);
+      }
+
+      .hero-bg-gold-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(180deg, var(--gold) 0%, transparent 80%);
+        opacity: 0.6;
+      }
+
+      .hero-bg-dot-field {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          oklch(100% 0 0 / 0.04) 1px,
+          transparent 1px
+        );
+        background-size: 36px 36px;
+        animation: dotsMove 25s linear infinite;
+      }
+
+      @keyframes dotsMove {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: 36px 36px;
+        }
+      }
+
+      .hero-bg-glow {
+        position: absolute;
+        top: -20%;
+        right: 10%;
+        width: 50%;
+        height: 80%;
+        background: radial-gradient(
+          ellipse at center,
+          oklch(72% 0.16 80 / 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      /* Content */
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        padding: 9rem 0 5rem;
+      }
+
+      .hero-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+        animation: fadeUp 0.8s var(--ease-out-expo) both;
+      }
+
+      .hero-eyebrow-line {
+        width: 40px;
+        height: 2px;
+        background: var(--gold);
+      }
+
+      .hero-eyebrow-text {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      .hero-h1 {
+        font-family: var(--font-display);
+        font-size: clamp(3.2rem, 6.5vw, 6rem);
+        font-weight: 300;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: white;
+        margin-bottom: 1.75rem;
+        animation: fadeUp 0.8s 0.12s var(--ease-out-expo) both;
+      }
+
+      .hero-h1 em {
+        font-style: italic;
+        font-weight: 700;
+        color: var(--gold);
+      }
+
+      .hero-sub {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: oklch(100% 0 0 / 0.6);
+        font-weight: 300;
+        max-width: 48ch;
+        margin-bottom: 2.5rem;
+        animation: fadeUp 0.8s 0.22s var(--ease-out-expo) both;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        animation: fadeUp 0.8s 0.32s var(--ease-out-expo) both;
+      }
+
+      /* Hero right — stat panel */
+      .hero-right {
+        animation: fadeUp 0.8s 0.2s var(--ease-out-expo) both;
+      }
+
+      .hero-stat-panel {
+        background: oklch(100% 0 0 / 0.04);
+        border: 1px solid oklch(100% 0 0 / 0.1);
+        border-radius: 24px;
+        padding: 2.5rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .hero-stat-panel-title {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: oklch(100% 0 0 / 0.35);
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid oklch(100% 0 0 / 0.08);
+      }
+
+      .hero-stat-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .hero-stat-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 0;
+        border-bottom: 1px solid oklch(100% 0 0 / 0.06);
+      }
+
+      .hero-stat-item:last-child {
+        border-bottom: none;
+      }
+
+      .hero-stat-label {
+        font-size: 0.875rem;
+        color: oklch(100% 0 0 / 0.5);
+        font-weight: 400;
+      }
+
+      .hero-stat-value {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+
+      .hero-stat-value span {
+        font-size: 0.85rem;
+        color: var(--gold);
+        font-family: var(--font-body);
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        margin-left: 0.4rem;
+        vertical-align: middle;
+      }
+
+      /* Hero bottom bar */
+      .hero-bar {
+        position: relative;
+        z-index: 2;
+        border-top: 1px solid oklch(100% 0 0 / 0.1);
+        padding: 1.25rem 0;
+      }
+
+      .hero-bar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+
+      .hero-bar-scroll {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: oklch(100% 0 0 / 0.35);
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+
+      .hero-bar-scroll:hover {
+        color: var(--gold);
+      }
+
+      .scroll-arrow {
+        width: 28px;
+        height: 28px;
+        border: 1px solid oklch(100% 0 0 / 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: scrollBounce 2s ease-in-out infinite;
+      }
+
+      .scroll-arrow svg {
+        width: 12px;
+        height: 12px;
+        color: var(--gold);
+      }
+
+      @keyframes scrollBounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(4px);
+        }
+      }
+
+      .hero-bar-tags {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .hero-bar-tag {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: oklch(100% 0 0 / 0.25);
+      }
+
+      .hero-bar-tag strong {
+        color: oklch(100% 0 0 / 0.6);
+        font-weight: 700;
+      }
+
+      /* ============================================
+         BUTTONS
+         ============================================ */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        border-radius: 10px;
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 0.9rem;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        transition: all 0.25s var(--ease-out-expo);
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .btn svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.25s var(--ease-bounce);
+        flex-shrink: 0;
+      }
+
+      .btn:hover svg {
+        transform: translateX(3px);
+      }
+
+      .btn-gold {
+        background: var(--gold);
+        color: var(--ink);
+        box-shadow: 0 4px 20px oklch(72% 0.16 80 / 0.35);
+      }
+
+      .btn-gold:hover {
+        background: oklch(78% 0.16 82);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px oklch(72% 0.16 80 / 0.45);
+      }
+
+      .btn-ghost-light {
+        background: transparent;
+        color: oklch(100% 0 0 / 0.6);
+        border: 1.5px solid oklch(100% 0 0 / 0.2);
+      }
+
+      .btn-ghost-light:hover {
+        background: oklch(100% 0 0 / 0.08);
+        border-color: oklch(100% 0 0 / 0.4);
+        color: white;
+      }
+
+      .btn-dark {
+        background: var(--ink);
+        color: white;
+        box-shadow: 0 4px 20px oklch(14% 0.02 260 / 0.2);
+      }
+
+      .btn-dark:hover {
+        background: oklch(22% 0.03 260);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px oklch(14% 0.02 260 / 0.3);
+      }
+
+      .btn-green {
+        background: var(--green);
+        color: white;
+        box-shadow: 0 4px 20px oklch(55% 0.16 155 / 0.3);
+      }
+
+      .btn-green:hover {
+        background: var(--green-deep);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px oklch(55% 0.16 155 / 0.4);
+      }
+
+      .btn-outline-dark {
+        background: transparent;
+        color: var(--ink-muted);
+        border: 1.5px solid var(--rule);
+      }
+
+      .btn-outline-dark:hover {
+        border-color: var(--ink);
+        color: var(--ink);
+        background: transparent;
+      }
+
+      /* ============================================
+         SECTION SHARED
+         ============================================ */
+      section {
+        position: relative;
+      }
+
+      .section-wrap {
+        padding: clamp(5rem, 10vw, 9rem) 0;
+      }
+
+      .section-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .section-eyebrow-line {
+        width: 32px;
+        height: 2px;
+        background: var(--gold);
+        flex-shrink: 0;
+      }
+
+      .section-eyebrow-text {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+      }
+
+      .section-title {
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        font-weight: 300;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        color: var(--ink);
+        margin-bottom: 1rem;
+      }
+
+      .section-title em {
+        font-style: italic;
+        font-weight: 700;
+      }
+
+      .section-desc {
+        font-size: 1.05rem;
+        color: var(--ink-muted);
+        line-height: 1.75;
+        font-weight: 300;
+        max-width: 55ch;
+      }
+
+      .section-header {
+        margin-bottom: clamp(3rem, 5vw, 5rem);
+      }
+
+      /* ============================================
+         HOW IT WORKS — SPLIT LAYOUT
+         ============================================ */
+      #info {
+        background: white;
+      }
+
+      .info-layout {
+        display: grid;
+        grid-template-columns: 1fr 1.8fr;
+        gap: 5rem;
+        align-items: start;
+      }
+
+      .info-left {
+        position: sticky;
+        top: 120px;
+      }
+
+      .steps-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        counter-reset: steps;
+      }
+
+      .step-item {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        gap: 1.5rem;
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--rule);
+        opacity: 0;
+        transform: translateX(-20px);
+        transition:
+          opacity 0.6s var(--ease-out-expo),
+          transform 0.6s var(--ease-out-expo);
+      }
+
+      .step-item.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .step-item:first-child {
+        padding-top: 0;
+      }
+      .step-item:last-child {
+        border-bottom: none;
+      }
+
+      .step-num {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: 2px solid var(--rule);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--ink-faint);
+        flex-shrink: 0;
+        transition: all 0.4s var(--ease-out-expo);
+        counter-increment: steps;
+      }
+
+      .step-item:hover .step-num {
+        border-color: var(--gold);
+        color: var(--gold-deep);
+        background: var(--gold-light);
+      }
+
+      .step-body h3 {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin-bottom: 0.5rem;
+      }
+
+      .step-body p {
+        font-size: 0.95rem;
+        color: var(--ink-muted);
+        line-height: 1.7;
+        font-weight: 300;
+      }
+
+      .step-icon-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+      }
+
+      .step-icon-chip {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.3rem 0.75rem;
+        background: var(--paper-warm);
+        border-radius: 99px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--ink-muted);
+      }
+
+      .step-icon-chip svg {
+        width: 13px;
+        height: 13px;
+        color: var(--gold-deep);
+      }
+
+      /* ============================================
+         QUIZZEN — LARGE EDITORIAL CARDS
+         ============================================ */
+      #quizzen {
+        background: var(--paper);
+      }
+
+      #quizzen .section-wrap {
+        border-top: 1px solid var(--rule);
+      }
+
+      .quizzen-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 2rem;
+        margin-bottom: clamp(3rem, 5vw, 5rem);
+        flex-wrap: wrap;
+      }
+
+      .quiz-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5px;
+        background: var(--rule);
+        border: 1.5px solid var(--rule);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+      }
+
+      .quiz-card {
+        background: white;
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        position: relative;
+        transition: background 0.3s;
+        overflow: hidden;
+      }
+
+      .quiz-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--gold-light), transparent 50%);
+        opacity: 0;
+        transition: opacity 0.4s;
+        pointer-events: none;
+      }
+
+      .quiz-card:not(.quiz-card--disabled):hover::before {
+        opacity: 0.45;
+      }
+
+      .quiz-card--disabled {
+        background: var(--paper-warm);
+        cursor: not-allowed;
+      }
+
+      .quiz-card-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .quiz-num-badge {
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        background: var(--paper-warm);
+        padding: 0.35rem 0.8rem;
+        border-radius: 99px;
+        border: 1px solid var(--rule);
+      }
+
+      .quiz-card--disabled .quiz-num-badge {
+        opacity: 0.5;
+      }
+
+      .quiz-icon-box {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: transform 0.4s var(--ease-bounce);
+      }
+
+      .quiz-icon-box--green {
+        background: var(--green-light);
+        box-shadow: 0 4px 16px oklch(55% 0.16 155 / 0.2);
+      }
+
+      .quiz-icon-box--blue {
+        background: var(--blue-light);
+        box-shadow: 0 4px 16px oklch(44% 0.15 255 / 0.15);
+      }
+
+      .quiz-icon-box--muted {
+        background: var(--paper-warm);
+        opacity: 0.5;
+      }
+
+      .quiz-card:hover .quiz-icon-box {
+        transform: rotate(-8deg) scale(1.08);
+      }
+
+      .quiz-icon-box svg {
+        width: 28px;
+        height: 28px;
+      }
+      .quiz-icon-box--green svg {
+        color: var(--green);
+      }
+      .quiz-icon-box--blue svg {
+        color: var(--blue);
+      }
+      .quiz-icon-box--muted svg {
+        color: var(--ink-faint);
+      }
+
+      .quiz-card-body h3 {
+        font-family: var(--font-display);
+        font-size: 1.6rem;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        line-height: 1.2;
+        color: var(--ink);
+        margin-bottom: 0.6rem;
+      }
+
+      .quiz-card--disabled .quiz-card-body h3 {
+        opacity: 0.5;
+      }
+
+      .quiz-card-body p {
+        font-size: 0.9rem;
+        color: var(--ink-muted);
+        line-height: 1.7;
+        font-weight: 300;
+      }
+
+      .quiz-card--disabled .quiz-card-body p {
+        opacity: 0.4;
+      }
+
+      .quiz-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .quiz-tag {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--ink-muted);
+        background: var(--paper-warm);
+        padding: 0.3rem 0.75rem;
+        border-radius: 99px;
+        border: 1px solid var(--rule);
+        letter-spacing: 0.02em;
+        transition: all 0.2s;
+      }
+
+      .quiz-card:not(.quiz-card--disabled):hover .quiz-tag {
+        background: var(--gold-light);
+        border-color: var(--gold);
+        color: var(--gold-deep);
+      }
+
+      .quiz-card-footer {
+        margin-top: auto;
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      /* Upcoming strip */
+      .quiz-upcoming {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .quiz-upcoming-card {
+        border: 1.5px dashed var(--rule);
+        border-radius: 16px;
+        padding: 1.75rem;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        opacity: 0.55;
+      }
+
+      .quiz-upcoming-icon {
+        width: 44px;
+        height: 44px;
+        background: var(--paper-warm);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .quiz-upcoming-icon svg {
+        width: 22px;
+        height: 22px;
+        color: var(--ink-faint);
+      }
+
+      .quiz-upcoming-title {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 0.2rem;
+      }
+
+      .quiz-upcoming-sub {
+        font-size: 0.8rem;
+        color: var(--ink-faint);
+        font-weight: 400;
+      }
+
+      .quiz-upcoming-badge {
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        background: var(--paper-warm);
+        padding: 0.2rem 0.6rem;
+        border-radius: 99px;
+        border: 1px solid var(--rule);
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+
+      /* ============================================
+         TEAM — HORIZONTAL PROFILES
+         ============================================ */
+      #team {
+        background: var(--ink);
+        color: white;
+      }
+
+      #team .section-eyebrow-text {
+        color: var(--gold);
+      }
+      #team .section-eyebrow-line {
+        background: var(--gold);
+      }
+
+      #team .section-title {
+        color: white;
+      }
+
+      #team .section-desc {
+        color: oklch(100% 0 0 / 0.5);
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5px;
+        background: oklch(100% 0 0 / 0.06);
+        border: 1.5px solid oklch(100% 0 0 / 0.08);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-top: 4rem;
+      }
+
+      .team-card {
+        background: oklch(17% 0.025 260);
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        transition: background 0.3s;
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.6s var(--ease-out-expo),
+          transform 0.6s var(--ease-out-expo),
+          background 0.3s;
+      }
+
+      .team-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .team-card:hover {
+        background: oklch(20% 0.025 260);
+      }
+
+      .team-card::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s var(--ease-out-expo);
+      }
+
+      .team-card:hover::after {
+        transform: scaleX(1);
+      }
+
+      .team-avatar-row {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+      }
+
+      .team-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: var(--gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--ink);
+        flex-shrink: 0;
+        box-shadow: 0 4px 20px oklch(72% 0.16 80 / 0.3);
+        transition: transform 0.4s var(--ease-bounce);
+      }
+
+      .team-card:hover .team-avatar {
+        transform: scale(1.06) rotate(-4deg);
+      }
+
+      .team-name {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: white;
+      }
+
+      .team-role {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-top: 0.15rem;
+      }
+
+      .team-bio {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        color: oklch(100% 0 0 / 0.45);
+        font-weight: 300;
+      }
+
+      /* ============================================
+         FOOTER
+         ============================================ */
+      footer {
+        background: oklch(11% 0.015 260);
+        border-top: 1px solid oklch(100% 0 0 / 0.06);
+      }
+
+      .footer-inner {
+        padding: 2rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-logo {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 700;
+        color: oklch(100% 0 0 / 0.4);
+        letter-spacing: -0.01em;
+      }
+
+      .footer-copy {
+        font-size: 0.8rem;
+        color: oklch(100% 0 0 / 0.25);
+        letter-spacing: 0.02em;
+      }
+
+      .footer-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--green);
+        letter-spacing: 0.06em;
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        background: var(--green);
+        border-radius: 50%;
+        box-shadow: 0 0 0 2px oklch(55% 0.16 155 / 0.3);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 2px oklch(55% 0.16 155 / 0.3);
+        }
+        50% {
+          box-shadow: 0 0 0 5px oklch(55% 0.16 155 / 0.1);
+        }
+      }
+
+      /* ============================================
+         ANIMATIONS
+         ============================================ */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.7s var(--ease-out-expo),
+          transform 0.7s var(--ease-out-expo);
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ============================================
+         KIOSK / PORTRAIT — RESPONSIVE OVERRIDES
+         Target: portrait touch screen (city hall kiosk)
+         Priorities: single-column, large accessible text,
+         generous touch targets, breathing room
+         ============================================ */
+
+      /* Triggers on portrait orientation (kiosk screen) OR narrow viewports */
+      @media (orientation: portrait), (max-width: 900px) {
+        html {
+          font-size: 19px; /* base upscale for accessibility */
+        }
+
+        .wrap {
+          padding: 0 clamp(2rem, 5vw, 4.5rem);
+        }
+
+        /* ── NAV ── */
+        .nav-inner {
+          height: 84px;
+        }
+
+        .nav-logo {
+          font-size: 1.15rem;
+          gap: 0.875rem;
+        }
+
+        .nav-logo-mark {
+          width: 46px;
+          height: 46px;
+          border-radius: 12px;
+        }
+
+        .nav-logo-mark svg {
+          width: 22px;
+          height: 22px;
+        }
+
+        .nav-links {
+          display: none; /* scroll nav links not needed on touch kiosk */
+        }
+
+        /* ── HERO ── */
+        .hero-content {
+          grid-template-columns: 1fr;
+          padding: 8rem 0 5.5rem;
+          gap: 0;
+        }
+
+        .hero-right {
+          display: none;
+        }
+
+        .hero-eyebrow {
+          margin-bottom: 1.75rem;
+        }
+
+        .hero-eyebrow-text {
+          font-size: 0.78rem;
+          letter-spacing: 0.15em;
+        }
+
+        .hero-h1 {
+          font-size: clamp(3.2rem, 9vw, 5.5rem);
+          margin-bottom: 1.75rem;
+          line-height: 1.08;
+        }
+
+        .hero-sub {
+          font-size: 1.15rem;
+          line-height: 1.85;
+          max-width: 100%;
+          margin-bottom: 2.75rem;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .hero-actions .btn {
+          width: 100%;
+          justify-content: center;
+          min-height: 70px;
+          font-size: 1.05rem;
+          padding: 1.1rem 2rem;
+          border-radius: 12px;
+        }
+
+        .hero-bar-tags {
+          display: none;
+        }
+
+        .hero-bar-scroll {
+          font-size: 0.82rem;
+        }
+
+        .scroll-arrow {
+          width: 34px;
+          height: 34px;
+        }
+
+        /* ── TICKER ── */
+        .ticker-strip {
+          padding: 1rem 0;
+        }
+
+        .ticker-item {
+          font-size: 0.85rem;
+          letter-spacing: 0.1em;
+          gap: 1rem;
+        }
+
+        /* ── SECTIONS ── */
+        .section-wrap {
+          padding: clamp(4.5rem, 9vw, 7rem) 0;
+        }
+
+        .section-eyebrow-text {
+          font-size: 0.75rem;
+        }
+
+        .section-title {
+          font-size: clamp(2.5rem, 7vw, 4rem);
+          line-height: 1.1;
+        }
+
+        .section-desc {
+          font-size: 1.1rem;
+          line-height: 1.85;
+          max-width: 100%;
+        }
+
+        .section-header {
+          margin-bottom: clamp(2.5rem, 5vw, 4rem);
+        }
+
+        /* ── INFO / HOW IT WORKS ── */
+        .info-layout {
+          grid-template-columns: 1fr;
+          gap: 3.5rem;
+        }
+
+        .info-left {
+          position: static;
+        }
+
+        .step-item {
+          grid-template-columns: 64px 1fr;
+          gap: 1.75rem;
+          padding: 2.25rem 0;
+        }
+
+        .step-num {
+          width: 64px;
+          height: 64px;
+          font-size: 1.45rem;
+        }
+
+        .step-body h3 {
+          font-size: 1.5rem;
+          margin-bottom: 0.6rem;
+        }
+
+        .step-body p {
+          font-size: 1.05rem;
+          line-height: 1.8;
+        }
+
+        .step-icon-chip {
+          font-size: 0.88rem;
+          padding: 0.4rem 0.95rem;
+        }
+
+        .step-icon-chip svg {
+          width: 15px;
+          height: 15px;
+        }
+
+        /* ── QUIZZEN ── */
+        .quizzen-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .quiz-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5px;
+        }
+
+        .quiz-upcoming {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .quiz-card {
+          padding: 2.25rem;
+        }
+
+        .quiz-icon-box {
+          width: 60px;
+          height: 60px;
+          border-radius: 16px;
+        }
+
+        .quiz-icon-box svg {
+          width: 30px;
+          height: 30px;
+        }
+
+        .quiz-num-badge {
+          font-size: 0.7rem;
+        }
+
+        .quiz-card-body h3 {
+          font-size: 1.8rem;
+          margin-bottom: 0.75rem;
+        }
+
+        .quiz-card-body p {
+          font-size: 1.05rem;
+          line-height: 1.8;
+        }
+
+        .quiz-tags {
+          gap: 0.6rem;
+        }
+
+        .quiz-tag {
+          font-size: 0.88rem;
+          padding: 0.4rem 0.95rem;
+        }
+
+        .quiz-card-footer {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .quiz-card-footer .btn {
+          width: 100%;
+          justify-content: center;
+          min-height: 66px;
+          font-size: 1.05rem;
+          padding: 1rem 1.5rem;
+        }
+
+        .quiz-upcoming-card {
+          padding: 1.75rem 2rem;
+          gap: 1.5rem;
+        }
+
+        .quiz-upcoming-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 14px;
+        }
+
+        .quiz-upcoming-icon svg {
+          width: 26px;
+          height: 26px;
+        }
+
+        .quiz-upcoming-title {
+          font-size: 1.1rem;
+        }
+
+        .quiz-upcoming-sub {
+          font-size: 0.9rem;
+        }
+
+        /* ── TEAM ── */
+        .team-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .team-card {
+          padding: 2.75rem;
+        }
+
+        .team-avatar {
+          width: 72px;
+          height: 72px;
+          font-size: 1.75rem;
+        }
+
+        .team-name {
+          font-size: 1.8rem;
+        }
+
+        .team-role {
+          font-size: 0.78rem;
+          letter-spacing: 0.1em;
+        }
+
+        .team-bio {
+          font-size: 1.05rem;
+          line-height: 1.8;
+        }
+
+        .team-card .btn {
+          min-height: 66px;
+          width: 100%;
+          justify-content: center;
+          font-size: 1.05rem;
+          padding: 1rem 1.5rem;
+        }
+
+        /* ── FOOTER ── */
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+          padding: 2.25rem 0;
+        }
+
+        .footer-logo {
+          font-size: 1.05rem;
+        }
+
+        .footer-copy {
+          font-size: 0.88rem;
+        }
+
+        .footer-status {
+          font-size: 0.85rem;
+        }
+
+        .status-dot {
+          width: 9px;
+          height: 9px;
+        }
+
+        /* ── GENERAL BUTTONS ── */
+        .btn {
+          min-height: 60px;
+          font-size: 1rem;
+          padding: 1rem 2rem;
+        }
+      }
+
+      /* ── Touch devices: remove hover-only micro-movements ── */
+      @media (hover: none) {
+        .quiz-card:not(.quiz-card--disabled):hover {
+          transform: none;
+        }
+
+        .btn:hover {
+          transform: none !important;
+        }
+
+        .team-card:hover .team-avatar {
+          transform: none;
+        }
+
+        .step-card:hover {
+          transform: none;
+        }
+      }
+
+      /* ============================================
+         DECORATIVE RULE DIVIDER
+         ============================================ */
+      .rule-divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 0.5rem 0 2.5rem;
+      }
+
+      .rule-divider::before,
+      .rule-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--rule);
+      }
+
+      .rule-divider-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--gold);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      /* ============================================
+         TICKER / MARQUEE STRIP (below hero)
+         ============================================ */
+      .ticker-strip {
+        background: var(--gold);
+        overflow: hidden;
+        padding: 0.75rem 0;
+        position: relative;
+        z-index: 1;
+      }
+
+      .ticker-track {
+        display: flex;
+        gap: 3rem;
+        width: max-content;
+        animation: ticker 22s linear infinite;
+      }
+
+      @keyframes ticker {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      .ticker-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink);
+        white-space: nowrap;
+      }
+
+      .ticker-bullet {
+        width: 5px;
+        height: 5px;
+        background: var(--gold-deep);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ══════════════════════════════
+         NAVIGATION
+    ══════════════════════════════ -->
+    <nav class="nav" id="main-nav">
+      <div class="wrap">
+        <div class="nav-inner">
+          <a href="#home" class="nav-logo">
+            <div class="nav-logo-mark">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+              </svg>
+            </div>
+            Kennisquiz Otterdam
+          </a>
+          <ul class="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#info">Hoe werkt het</a></li>
+            <li><a href="#quizzen">Quizzen</a></li>
+            <li><a href="#team">Team</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════
+         HERO
+    ══════════════════════════════ -->
+    <section class="hero" id="home">
+      <div class="hero-bg">
+        <div class="hero-bg-arch"></div>
+        <div class="hero-bg-dot-field"></div>
+        <div class="hero-bg-glow"></div>
+        <div class="hero-bg-gold-line"></div>
+      </div>
+
+      <div class="wrap hero-content">
+        <!-- Left column -->
+        <div class="hero-left">
+          <div class="hero-eyebrow">
+            <div class="hero-eyebrow-line"></div>
+            <span class="hero-eyebrow-text">Gemeente Otterdam</span>
+          </div>
+
+          <h1 class="hero-h1">
+            Ontdek Otterdam<br />
+            op een <em>interactieve</em><br />
+            manier
+          </h1>
+
+          <p class="hero-sub">
+            Leer over duurzaamheid en democratie met onze educatieve quizzen.
+            Speciaal ontwikkeld voor de informatiezuil in het gemeentehuis.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#quizzen" class="btn btn-gold">
+              Start een quiz
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="#info" class="btn btn-ghost-light">Meer informatie</a>
+          </div>
+        </div>
+
+        <!-- Right column — stat panel -->
+        <div class="hero-right">
+          <div class="hero-stat-panel">
+            <div class="hero-stat-panel-title">Platform overzicht</div>
+            <div class="hero-stat-list">
+              <div class="hero-stat-item">
+                <span class="hero-stat-label">Actieve quizzen</span>
+                <span class="hero-stat-value">2 <span>actief</span></span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-label">Vragen totaal</span>
+                <span class="hero-stat-value">20 <span>vragen</span></span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-label">Gemiddelde duur</span>
+                <span class="hero-stat-value">~10 <span>min</span></span>
+              </div>
+              <div class="hero-stat-item">
+                <span class="hero-stat-label">Informatiezuil</span>
+                <span
+                  class="hero-stat-value"
+                  style="font-size: 1.1rem; color: var(--green)"
+                  >Operationeel</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="hero-bar">
+        <div class="wrap hero-bar-inner">
+          <div
+            class="hero-bar-scroll"
+            onclick="
+              document
+                .getElementById('info')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            <div class="scroll-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path d="M12 5v14M5 12l7 7 7-7" />
+              </svg>
+            </div>
+            Scroll verder
+          </div>
+          <div class="hero-bar-tags">
+            <span class="hero-bar-tag"
+              ><strong>Milieu</strong> &amp; Duurzaamheid</span
+            >
+            <span class="hero-bar-tag" style="color: oklch(100% 0 0 / 0.1)"
+              >·</span
+            >
+            <span class="hero-bar-tag"><strong>Lokaal</strong> Bestuur</span>
+            <span class="hero-bar-tag" style="color: oklch(100% 0 0 / 0.1)"
+              >·</span
+            >
+            <span class="hero-bar-tag">Grafisch Lyceum Rotterdam</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         TICKER STRIP
+    ══════════════════════════════ -->
+    <div class="ticker-strip" aria-hidden="true">
+      <div class="ticker-track">
+        <!-- Two copies for seamless loop -->
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Kennisquiz Otterdam</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Milieu &amp; Duurzaamheid</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Lokaal Bestuur</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Grafisch Lyceum Rotterdam</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Educatief Platform 2026</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Gemeente Otterdam</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Informatiezuil Gemeentehuis</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Kennisquiz Otterdam</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Milieu &amp; Duurzaamheid</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Lokaal Bestuur</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Grafisch Lyceum Rotterdam</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Educatief Platform 2026</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Gemeente Otterdam</span
+        >
+        <span class="ticker-item"
+          ><span class="ticker-bullet"></span>Informatiezuil Gemeentehuis</span
+        >
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════
+         HOW IT WORKS
+    ══════════════════════════════ -->
+    <section id="info">
+      <div class="wrap section-wrap">
+        <div class="info-layout">
+          <!-- Left sticky header -->
+          <div class="info-left">
+            <div class="section-eyebrow">
+              <div class="section-eyebrow-line"></div>
+              <span class="section-eyebrow-text">Hoe werkt het</span>
+            </div>
+            <h2 class="section-title">
+              Eenvoudig kennismaken<br />met de <em>quiz</em>
+            </h2>
+            <div class="rule-divider"><div class="rule-divider-dot"></div></div>
+            <p class="section-desc">
+              In drie simpele stappen leert u meer over belangrijke thema's in
+              Otterdam.
+            </p>
+          </div>
+
+          <!-- Right steps -->
+          <div class="steps-list">
+            <div class="step-item fade-in">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h3>Kies uw onderwerp</h3>
+                <p>
+                  Selecteer uit twee interessante thema's: duurzaamheid of
+                  lokaal bestuur. Elk onderwerp is zorgvuldig samengesteld door
+                  onze studenten.
+                </p>
+                <div class="step-icon-row">
+                  <span class="step-icon-chip">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                      <path
+                        d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                      />
+                    </svg>
+                    2 onderwerpen
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item fade-in">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h3>Lees de context</h3>
+                <p>
+                  Elke quiz begint met achtergrondinformatie. Dit helpt u om de
+                  vragen beter te begrijpen en meer te leren over het onderwerp.
+                </p>
+                <div class="step-icon-row">
+                  <span class="step-icon-chip">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="11" cy="11" r="8" />
+                      <path d="m21 21-4.35-4.35" />
+                    </svg>
+                    Achtergrondinformatie
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item fade-in">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h3>Toets uw kennis</h3>
+                <p>
+                  Beantwoord 10 meerkeuzevragen en ontvang direct feedback. Aan
+                  het einde ziet u uw score en wat u heeft geleerd.
+                </p>
+                <div class="step-icon-row">
+                  <span class="step-icon-chip">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    Direct feedback
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         QUIZZEN
+    ══════════════════════════════ -->
+    <section id="quizzen">
+      <div class="wrap section-wrap">
+        <div class="quizzen-header">
+          <div>
+            <div class="section-eyebrow">
+              <div class="section-eyebrow-line"></div>
+              <span class="section-eyebrow-text">Beschikbare quizzen</span>
+            </div>
+            <h2 class="section-title">Kies <em>uw quiz</em></h2>
+            <p class="section-desc">
+              Twee uitgebreide quizzen over actuele thema's in Gemeente
+              Otterdam.
+            </p>
+          </div>
+        </div>
+
+        <!-- Active quizzes -->
+        <div class="quiz-grid fade-in">
+          <!-- Quiz 1 -->
+          <div class="quiz-card">
+            <div class="quiz-card-top">
+              <span class="quiz-num-badge">Quiz 01</span>
+              <div class="quiz-icon-box quiz-icon-box--green">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div class="quiz-card-body">
+              <h3>Milieu &amp; Duurzaamheid</h3>
+              <p>
+                Wat doet Gemeente Otterdam aan duurzaamheid? Test uw kennis over
+                afvalscheiding, energiebesparing, groene initiatieven en de
+                toekomstplannen voor een klimaatneutrale gemeente.
+              </p>
+            </div>
+            <div class="quiz-tags">
+              <span class="quiz-tag">10 vragen</span>
+              <span class="quiz-tag">± 5 minuten</span>
+              <span class="quiz-tag">Door Lalo</span>
+            </div>
+            <div class="quiz-card-footer">
+              <a href="milieu.html" class="btn btn-green">
+                Start quiz
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a href="#" class="btn btn-outline-dark">Meer info</a>
+            </div>
+          </div>
+
+          <!-- Quiz 2 -->
+          <div class="quiz-card">
+            <div class="quiz-card-top">
+              <span class="quiz-num-badge">Quiz 02</span>
+              <div class="quiz-icon-box quiz-icon-box--blue">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 3L2 9v11h20V9l-10-6zm8 16h-4v-6h-4v6H8v-8l4-2.5 4 2.5v8z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div class="quiz-card-body">
+              <h3>Het Gemeentehuis</h3>
+              <p>
+                Hoe werkt de lokale democratie? Ontdek de taken van de
+                gemeenteraad, het college van B&amp;W, en leer hoe inwoners
+                invloed kunnen uitoefenen op beslissingen in Otterdam.
+              </p>
+            </div>
+            <div class="quiz-tags">
+              <span class="quiz-tag">10 vragen</span>
+              <span class="quiz-tag">± 5 minuten</span>
+              <span class="quiz-tag">Door Max</span>
+            </div>
+            <div class="quiz-card-footer">
+              <a href="gemeentehuis.html" class="btn btn-dark">
+                Start quiz
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a href="#" class="btn btn-outline-dark">Meer info</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming -->
+        <div class="quiz-upcoming fade-in">
+          <div class="quiz-upcoming-card">
+            <div class="quiz-upcoming-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="quiz-upcoming-title">Binnenkort beschikbaar</div>
+              <div class="quiz-upcoming-sub">
+                Nieuwe quizzen zijn in ontwikkeling.
+              </div>
+            </div>
+            <span class="quiz-upcoming-badge">Quiz 03</span>
+          </div>
+          <div class="quiz-upcoming-card">
+            <div class="quiz-upcoming-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
+                />
+              </svg>
+            </div>
+            <div>
+              <div class="quiz-upcoming-title">Ruimte voor uitbreiding</div>
+              <div class="quiz-upcoming-sub">
+                Gereserveerd voor toekomstige content.
+              </div>
+            </div>
+            <span class="quiz-upcoming-badge">Quiz 04</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         TEAM
+    ══════════════════════════════ -->
+    <section id="team">
+      <div class="wrap section-wrap">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="section-eyebrow-text">Het team</span>
+        </div>
+        <h2 class="section-title" style="color: white">
+          Ontwikkeld door <em>studenten</em>
+        </h2>
+        <div class="rule-divider" style="--rule: oklch(100% 0 0 / 0.1)">
+          <div class="rule-divider-dot"></div>
+        </div>
+        <p class="section-desc">
+          Deze quizapplicatie is gemaakt door eerstejaars studenten van het
+          Grafisch Lyceum Rotterdam in opdracht van Gemeente Otterdam.
+        </p>
+
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar-row">
+              <div class="team-avatar">L</div>
+              <div>
+                <div class="team-name">Lalo</div>
+                <div class="team-role">Quiz ontwikkelaar — Milieu</div>
+              </div>
+            </div>
+            <p class="team-bio">
+              Student Creative Software Development. Gepassioneerd over
+              technologie en duurzaamheid. Ontwikkelde de quiz over milieu en
+              klimaatbeleid in Otterdam.
+            </p>
+            <div>
+              <a
+                href="milieu.html"
+                class="btn btn-gold"
+                style="width: fit-content"
+              >
+                Naar mijn quiz
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="team-card" style="transition-delay: 0.1s">
+            <div class="team-avatar-row">
+              <div class="team-avatar">M</div>
+              <div>
+                <div class="team-name">Max</div>
+                <div class="team-role">Quiz ontwikkelaar — Bestuur</div>
+              </div>
+            </div>
+            <p class="team-bio">
+              Student Creative Software Development. Geïnteresseerd in
+              democratie en toegankelijkheid. Ontwikkelde de quiz over lokaal
+              bestuur en politiek.
+            </p>
+            <div>
+              <a
+                href="gemeentehuis.html"
+                class="btn btn-gold"
+                style="width: fit-content"
+              >
+                Naar mijn quiz
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         FOOTER
+    ══════════════════════════════ -->
+    <footer>
+      <div class="wrap">
+        <div class="footer-inner">
+          <div class="footer-logo">Gemeente Otterdam</div>
+          <div class="footer-copy">© 2026 — Informatiezuil Gemeentehuis</div>
+          <div class="footer-status">
+            <span class="status-dot"></span>
+            Systeem operationeel
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      /* ─── SCROLL NAV ─── */
+      const nav = document.getElementById("main-nav");
+      const navLinks = document.querySelectorAll(".nav-links a");
+      const sections = document.querySelectorAll("section[id]");
+
+      function updateNav() {
+        nav.classList.toggle("scrolled", window.scrollY > 40);
+
+        const pos = window.scrollY + 100;
+        let current = "";
+        sections.forEach((s) => {
+          if (pos >= s.offsetTop) current = s.id;
+        });
+        navLinks.forEach((a) => {
+          a.classList.toggle(
+            "active",
+            a.getAttribute("href") === `#${current}`,
+          );
+        });
+      }
+
+      window.addEventListener("scroll", updateNav, { passive: true });
+      updateNav();
+
+      /* ─── SMOOTH SCROLL ─── */
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const href = a.getAttribute("href");
+          if (!href || href === "#") return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          const offset = nav.offsetHeight;
+          window.scrollTo({
+            top: target.offsetTop - offset,
+            behavior: "smooth",
+          });
+        });
+      });
+
+      /* ─── INTERSECTION OBSERVER ─── */
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => entry.target.classList.add("visible"), i * 120);
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -60px 0px" },
+      );
+
+      document
+        .querySelectorAll(".fade-in, .step-item, .team-card")
+        .forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

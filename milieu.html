@@ -1,0 +1,1613 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milieu & Duurzaamheid — Kennisquiz Otterdam</title>
+    <meta
+      name="description"
+      content="Test uw kennis over duurzaamheid en milieu in Gemeente Otterdam."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: oklch(14% 0.02 260);
+        --ink-muted: oklch(38% 0.03 260);
+        --ink-faint: oklch(58% 0.02 260);
+        --paper: oklch(97% 0.005 80);
+        --paper-warm: oklch(94% 0.01 80);
+        --rule: oklch(88% 0.008 80);
+
+        --gold: oklch(72% 0.16 80);
+        --gold-deep: oklch(58% 0.14 70);
+        --gold-light: oklch(88% 0.08 80);
+        --green: oklch(55% 0.16 155);
+        --green-deep: oklch(40% 0.14 155);
+        --green-light: oklch(92% 0.06 150);
+        --blue: oklch(44% 0.15 255);
+        --blue-light: oklch(92% 0.05 255);
+
+        /* Quiz theme: green */
+        --theme: var(--green);
+        --theme-deep: var(--green-deep);
+        --theme-light: var(--green-light);
+
+        --font-display: "Fraunces", Georgia, serif;
+        --font-body: "DM Sans", system-ui, sans-serif;
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.6;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--paper);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--green);
+        border-radius: 99px;
+      }
+      ::selection {
+        background: var(--green-light);
+        color: var(--ink);
+      }
+
+      .wrap {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 0 clamp(1.5rem, 5vw, 4rem);
+      }
+
+      /* ── NAV ── */
+      .nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 999;
+        background: oklch(97% 0.005 80 / 0.96);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 1px 0 var(--rule);
+      }
+
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 72px;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+      }
+
+      .nav-logo-mark {
+        width: 36px;
+        height: 36px;
+        background: var(--gold);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: transform 0.3s var(--ease-bounce);
+      }
+
+      .nav-logo:hover .nav-logo-mark {
+        transform: rotate(-8deg) scale(1.1);
+      }
+      .nav-logo-mark svg {
+        width: 18px;
+        height: 18px;
+        color: var(--ink);
+      }
+
+      .nav-back {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ink-muted);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        border: 1.5px solid var(--rule);
+        transition: all 0.2s;
+      }
+
+      .nav-back:hover {
+        border-color: var(--ink);
+        color: var(--ink);
+      }
+
+      .nav-back svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      /* ── HERO ── */
+      .quiz-hero {
+        padding-top: 72px;
+        background: var(--ink);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .quiz-hero-bg {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          oklch(100% 0 0 / 0.03) 1px,
+          transparent 1px
+        );
+        background-size: 32px 32px;
+      }
+
+      .quiz-hero-glow {
+        position: absolute;
+        top: -20%;
+        left: 5%;
+        width: 40%;
+        height: 120%;
+        background: radial-gradient(
+          ellipse at center,
+          oklch(55% 0.16 155 / 0.12) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .quiz-hero-inner {
+        position: relative;
+        z-index: 2;
+        padding: 4rem 0 3rem;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .quiz-hero-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .quiz-hero-eyebrow-line {
+        width: 30px;
+        height: 2px;
+        background: var(--green);
+      }
+
+      .quiz-hero-eyebrow-text {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--green);
+      }
+
+      .quiz-hero-title {
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 5vw, 4.2rem);
+        font-weight: 300;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+        color: white;
+        margin-bottom: 0.75rem;
+      }
+
+      .quiz-hero-title em {
+        font-style: italic;
+        font-weight: 700;
+        color: var(--green);
+      }
+
+      .quiz-hero-sub {
+        font-size: 1rem;
+        color: oklch(100% 0 0 / 0.5);
+        font-weight: 300;
+        max-width: 52ch;
+      }
+
+      .quiz-meta-panel {
+        background: oklch(100% 0 0 / 0.05);
+        border: 1px solid oklch(100% 0 0 / 0.1);
+        border-radius: 16px;
+        padding: 1.5rem 2rem;
+        display: flex;
+        gap: 2.5rem;
+        flex-shrink: 0;
+      }
+
+      .quiz-meta-item {
+        text-align: center;
+      }
+
+      .quiz-meta-value {
+        font-family: var(--font-display);
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 0.25rem;
+      }
+
+      .quiz-meta-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: oklch(100% 0 0 / 0.35);
+      }
+
+      /* ── PROGRESS STRIP ── */
+      .progress-strip {
+        background: oklch(18% 0.025 260);
+        border-bottom: 1px solid oklch(100% 0 0 / 0.06);
+        padding: 0.6rem 0;
+      }
+
+      .progress-inner {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+      }
+
+      .progress-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: oklch(100% 0 0 / 0.3);
+        white-space: nowrap;
+      }
+
+      .progress-track {
+        flex: 1;
+        height: 4px;
+        background: oklch(100% 0 0 / 0.08);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: var(--green);
+        border-radius: 99px;
+        width: 0%;
+        transition: width 0.6s var(--ease-out-expo);
+        box-shadow: 0 0 8px oklch(55% 0.16 155 / 0.5);
+      }
+
+      .progress-count {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: oklch(100% 0 0 / 0.3);
+        white-space: nowrap;
+      }
+
+      /* ── MAIN QUIZ AREA ── */
+      .quiz-main {
+        padding: 3rem 0 5rem;
+      }
+
+      .quiz-stage {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      /* Info screen */
+      .info-screen {
+        background: white;
+        border: 1.5px solid var(--rule);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .info-screen-header {
+        padding: 2.5rem 2.5rem 2rem;
+        border-bottom: 1px solid var(--rule);
+        background: var(--green-light);
+      }
+
+      .info-screen-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--green-deep);
+        background: white;
+        padding: 0.3rem 0.75rem;
+        border-radius: 99px;
+        margin-bottom: 1rem;
+        border: 1px solid oklch(55% 0.16 155 / 0.2);
+      }
+
+      .info-screen-badge svg {
+        width: 13px;
+        height: 13px;
+        color: var(--green);
+      }
+
+      .info-screen-header h2 {
+        font-family: var(--font-display);
+        font-size: 1.9rem;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        color: var(--ink);
+        margin-bottom: 0.5rem;
+      }
+
+      .info-screen-header p {
+        font-size: 0.9rem;
+        color: var(--ink-muted);
+        font-weight: 300;
+        line-height: 1.7;
+      }
+
+      .info-screen-body {
+        padding: 2rem 2.5rem;
+      }
+
+      .info-screen-body p {
+        font-size: 0.95rem;
+        line-height: 1.75;
+        color: var(--ink-muted);
+        font-weight: 300;
+        margin-bottom: 1rem;
+      }
+
+      .info-screen-body p:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .info-stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border: 1.5px solid var(--rule);
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 1.75rem 0;
+      }
+
+      .info-stat {
+        padding: 1.25rem;
+        text-align: center;
+        border-right: 1px solid var(--rule);
+      }
+
+      .info-stat:last-child {
+        border-right: none;
+      }
+
+      .info-stat-value {
+        font-family: var(--font-display);
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--ink);
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 0.25rem;
+      }
+
+      .info-stat-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-faint);
+      }
+
+      .info-screen-footer {
+        padding: 1.5rem 2.5rem;
+        background: var(--paper-warm);
+        border-top: 1px solid var(--rule);
+      }
+
+      /* Question card */
+      .question-card {
+        background: white;
+        border: 1.5px solid var(--rule);
+        border-radius: 20px;
+        overflow: hidden;
+        display: none;
+        animation: cardIn 0.5s var(--ease-out-expo) both;
+      }
+
+      @keyframes cardIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .question-card.active {
+        display: block;
+      }
+
+      .question-header {
+        padding: 2rem 2.5rem 1.5rem;
+        border-bottom: 1px solid var(--rule);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        background: var(--green-light);
+      }
+
+      .question-num {
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--green-deep);
+        background: white;
+        padding: 0.3rem 0.75rem;
+        border-radius: 99px;
+        border: 1px solid oklch(55% 0.16 155 / 0.2);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .question-text {
+        font-family: var(--font-display);
+        font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.35;
+        color: var(--ink);
+        flex: 1;
+        padding-right: 0.5rem;
+      }
+
+      .answers-list {
+        padding: 1.75rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .answer-btn {
+        width: 100%;
+        text-align: left;
+        padding: 1rem 1.25rem;
+        border-radius: 12px;
+        border: 1.5px solid var(--rule);
+        background: var(--paper);
+        color: var(--ink);
+        font-size: 0.93rem;
+        font-weight: 500;
+        line-height: 1.45;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+        transition: all 0.2s var(--ease-out-expo);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .answer-letter {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: white;
+        border: 1.5px solid var(--rule);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        flex-shrink: 0;
+        transition: all 0.2s;
+      }
+
+      .answer-btn:hover:not(:disabled) {
+        border-color: var(--green);
+        background: var(--green-light);
+        transform: translateX(4px);
+      }
+
+      .answer-btn:hover:not(:disabled) .answer-letter {
+        background: var(--green);
+        border-color: var(--green);
+        color: white;
+      }
+
+      .answer-btn.correct {
+        border-color: var(--green);
+        background: var(--green-light);
+      }
+
+      .answer-btn.correct .answer-letter {
+        background: var(--green);
+        border-color: var(--green);
+        color: white;
+      }
+
+      .answer-btn.incorrect {
+        border-color: oklch(55% 0.2 25);
+        background: oklch(96% 0.02 25);
+        animation: shake 0.4s ease;
+      }
+
+      .answer-btn.incorrect .answer-letter {
+        background: oklch(55% 0.2 25);
+        border-color: oklch(55% 0.2 25);
+        color: white;
+      }
+
+      .answer-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.65;
+      }
+      .answer-btn.correct:disabled,
+      .answer-btn.incorrect:disabled {
+        opacity: 1;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-6px);
+        }
+        75% {
+          transform: translateX(6px);
+        }
+      }
+
+      /* Feedback */
+      .feedback-box {
+        margin: 0 2.5rem;
+        padding: 1.1rem 1.25rem;
+        border-radius: 12px;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        font-weight: 400;
+        display: none;
+        animation: feedIn 0.35s 0.2s var(--ease-out-expo) both;
+      }
+
+      @keyframes feedIn {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .feedback-box.show {
+        display: block;
+      }
+
+      .feedback-box.correct {
+        background: var(--green-light);
+        border: 1.5px solid oklch(55% 0.16 155 / 0.3);
+        color: var(--green-deep);
+      }
+
+      .feedback-box.incorrect {
+        background: oklch(96% 0.02 25);
+        border: 1.5px solid oklch(55% 0.2 25 / 0.3);
+        color: oklch(35% 0.15 25);
+      }
+
+      .feedback-title {
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .feedback-title svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .question-footer {
+        padding: 1.5rem 2.5rem;
+        border-top: 1px solid var(--rule);
+        margin-top: 1.5rem;
+        display: none;
+        animation: feedIn 0.35s 0.4s var(--ease-out-expo) both;
+      }
+
+      .question-footer.show {
+        display: block;
+      }
+
+      /* Results */
+      .results-card {
+        background: white;
+        border: 1.5px solid var(--rule);
+        border-radius: 20px;
+        overflow: hidden;
+        display: none;
+        animation: cardIn 0.5s var(--ease-out-expo) both;
+      }
+
+      .results-card.active {
+        display: block;
+      }
+
+      .results-header {
+        padding: 3rem 2.5rem 2.5rem;
+        text-align: center;
+        background: var(--ink);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .results-header-bg {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          oklch(100% 0 0 / 0.03) 1px,
+          transparent 1px
+        );
+        background-size: 28px 28px;
+      }
+
+      .results-header-glow {
+        position: absolute;
+        top: -30%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 100%;
+        background: radial-gradient(
+          ellipse,
+          oklch(55% 0.16 155 / 0.15) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .results-eyebrow {
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .results-score {
+        font-family: var(--font-display);
+        font-size: clamp(4rem, 12vw, 7rem);
+        font-weight: 700;
+        color: white;
+        letter-spacing: -0.04em;
+        line-height: 0.9;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .results-score span {
+        font-size: 0.35em;
+        color: oklch(100% 0 0 / 0.3);
+        font-weight: 300;
+      }
+
+      .results-message {
+        font-size: 1rem;
+        color: oklch(100% 0 0 / 0.5);
+        font-weight: 300;
+        position: relative;
+        z-index: 1;
+        margin-top: 0.75rem;
+      }
+
+      .results-stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .results-stat {
+        padding: 1.5rem;
+        text-align: center;
+        border-right: 1px solid var(--rule);
+      }
+
+      .results-stat:last-child {
+        border-right: none;
+      }
+
+      .results-stat-value {
+        font-family: var(--font-display);
+        font-size: 1.9rem;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+        margin-bottom: 0.2rem;
+      }
+
+      .results-stat-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-faint);
+      }
+
+      .results-footer {
+        padding: 2rem 2.5rem;
+        background: var(--paper-warm);
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.875rem 1.75rem;
+        border-radius: 10px;
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.25s var(--ease-out-expo);
+        white-space: nowrap;
+        border: none;
+      }
+
+      .btn svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.25s var(--ease-bounce);
+        flex-shrink: 0;
+      }
+      .btn:hover svg {
+        transform: translateX(3px);
+      }
+
+      .btn-green {
+        background: var(--green);
+        color: white;
+        box-shadow: 0 4px 20px oklch(55% 0.16 155 / 0.3);
+      }
+
+      .btn-green:hover {
+        background: var(--green-deep);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px oklch(55% 0.16 155 / 0.4);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--ink-muted);
+        border: 1.5px solid var(--rule);
+      }
+
+      .btn-outline:hover {
+        border-color: var(--ink);
+        color: var(--ink);
+      }
+
+      .btn-dark {
+        background: var(--ink);
+        color: white;
+        box-shadow: 0 4px 16px oklch(14% 0.02 260 / 0.18);
+      }
+
+      .btn-dark:hover {
+        background: oklch(22% 0.03 260);
+        transform: translateY(-2px);
+      }
+
+      /* Footer */
+      footer {
+        background: oklch(11% 0.015 260);
+        border-top: 1px solid oklch(100% 0 0 / 0.06);
+      }
+
+      .footer-inner {
+        padding: 1.75rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-logo {
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: oklch(100% 0 0 / 0.35);
+      }
+
+      .footer-copy {
+        font-size: 0.78rem;
+        color: oklch(100% 0 0 / 0.2);
+      }
+
+      .footer-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--green);
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        background: var(--green);
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 2px oklch(55% 0.16 155 / 0.3);
+        }
+        50% {
+          box-shadow: 0 0 0 5px oklch(55% 0.16 155 / 0.1);
+        }
+      }
+
+      /* ── KIOSK / PORTRAIT — Accessible touch overrides ── */
+      @media (orientation: portrait), (max-width: 900px) {
+        html {
+          font-size: 19px;
+        }
+
+        .wrap {
+          padding: 0 clamp(2rem, 5vw, 4.5rem);
+        }
+
+        /* NAV */
+        .nav-inner { height: 84px; }
+        .nav-logo { font-size: 1.15rem; gap: 0.875rem; }
+        .nav-logo-mark { width: 46px; height: 46px; border-radius: 12px; }
+        .nav-logo-mark svg { width: 22px; height: 22px; }
+        .nav-back {
+          min-height: 54px;
+          padding: 0.75rem 1.35rem;
+          font-size: 0.95rem;
+          border-radius: 10px;
+        }
+        .nav-back svg { width: 18px; height: 18px; }
+
+        /* HERO */
+        .quiz-hero-inner {
+          grid-template-columns: 1fr;
+          padding: 4.5rem 0 3.5rem;
+          gap: 0;
+        }
+        .quiz-meta-panel { display: none; }
+        .quiz-hero-eyebrow-text { font-size: 0.78rem; }
+        .quiz-hero-title { font-size: clamp(2.8rem, 9vw, 5.5rem); line-height: 1.08; }
+        .quiz-hero-sub { font-size: 1.1rem; line-height: 1.85; max-width: 100%; }
+
+        /* PROGRESS */
+        .progress-strip { padding: 0.9rem 0; }
+        .progress-track { height: 6px; }
+        .progress-label { font-size: 0.82rem; letter-spacing: 0.08em; }
+        .progress-count { font-size: 0.82rem; }
+
+        /* INFO SCREEN */
+        .info-screen-header { padding: 2.5rem 2.25rem 2.25rem; }
+        .info-screen-badge { font-size: 0.78rem; padding: 0.4rem 0.9rem; }
+        .info-screen-header h2 { font-size: 2.1rem; }
+        .info-screen-header p { font-size: 1.05rem; line-height: 1.75; }
+        .info-screen-body { padding: 2.25rem; }
+        .info-screen-body p { font-size: 1.08rem; line-height: 1.85; }
+        .info-stats-row { grid-template-columns: repeat(3, 1fr); }
+        .info-stat { padding: 1.5rem; }
+        .info-stat-value { font-size: 2rem; }
+        .info-stat-label { font-size: 0.82rem; }
+        .info-screen-footer { padding: 1.75rem 2.25rem; }
+        .info-screen-footer .btn {
+          min-height: 72px;
+          font-size: 1.1rem;
+          border-radius: 12px;
+          justify-content: center;
+        }
+
+        /* QUESTION CARD */
+        .question-header {
+          flex-direction: column-reverse;
+          align-items: flex-start;
+          padding: 2.25rem 2.25rem 2rem;
+          gap: 0.75rem;
+        }
+        .question-text {
+          font-size: 1.35rem;
+          line-height: 1.5;
+          padding-right: 0;
+        }
+        .question-num { font-size: 0.74rem; }
+        .answers-list { padding: 2rem 2.25rem; gap: 1.1rem; }
+        .answer-btn {
+          padding: 1.25rem 1.5rem;
+          min-height: 76px;
+          font-size: 1.08rem;
+          line-height: 1.5;
+          border-radius: 14px;
+          gap: 1rem;
+        }
+        .answer-letter {
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+          font-size: 0.82rem;
+          flex-shrink: 0;
+        }
+
+        /* FEEDBACK */
+        .feedback-box {
+          margin: 0 2.25rem;
+          padding: 1.35rem 1.5rem;
+          font-size: 1.03rem;
+          line-height: 1.75;
+          border-radius: 14px;
+        }
+        .feedback-title {
+          font-size: 0.85rem;
+          margin-bottom: 0.5rem;
+        }
+        .feedback-title svg { width: 17px; height: 17px; }
+
+        /* NEXT BUTTON */
+        .question-footer { padding: 1.75rem 2.25rem; margin-top: 1.75rem; }
+        .question-footer .btn {
+          min-height: 72px;
+          font-size: 1.1rem;
+          border-radius: 12px;
+          justify-content: center;
+        }
+
+        /* RESULTS */
+        .results-header { padding: 3rem 2.25rem 2.5rem; }
+        .results-eyebrow { font-size: 0.78rem; }
+        .results-score { font-size: clamp(5rem, 16vw, 8rem); }
+        .results-message { font-size: 1.1rem; line-height: 1.7; margin-top: 1rem; }
+        .results-stats-row { grid-template-columns: repeat(3, 1fr); }
+        .results-stat { padding: 1.75rem; }
+        .results-stat-value { font-size: 2.2rem; }
+        .results-stat-label { font-size: 0.82rem; }
+        .results-footer {
+          padding: 2rem 2.25rem;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        .results-footer .btn {
+          width: 100%;
+          justify-content: center;
+          min-height: 68px;
+          font-size: 1.05rem;
+          border-radius: 12px;
+        }
+
+        /* FOOTER */
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.4rem;
+          padding: 2rem 0;
+        }
+        .footer-logo { font-size: 1rem; }
+        .footer-copy { font-size: 0.88rem; }
+        .footer-status { font-size: 0.85rem; }
+        .status-dot { width: 9px; height: 9px; }
+      }
+
+      /* Remove hover-only transforms on touch screens */
+      @media (hover: none) {
+        .btn:hover { transform: none !important; box-shadow: none !important; }
+        .answer-btn:hover:not(:disabled) { transform: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="wrap nav-inner">
+        <a href="index2.html" class="nav-logo">
+          <div class="nav-logo-mark">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+          </div>
+          Kennisquiz Otterdam
+        </a>
+        <a href="index2.html#quizzen" class="nav-back">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Alle quizzen
+        </a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="quiz-hero">
+      <div class="quiz-hero-bg"></div>
+      <div class="quiz-hero-glow"></div>
+      <div class="wrap quiz-hero-inner">
+        <div>
+          <div class="quiz-hero-eyebrow">
+            <div class="quiz-hero-eyebrow-line"></div>
+            <span class="quiz-hero-eyebrow-text">Quiz 01 — Door Lalo</span>
+          </div>
+          <h1 class="quiz-hero-title">Milieu &amp; <em>Duurzaamheid</em></h1>
+          <p class="quiz-hero-sub">
+            Test uw kennis over afvalscheiding, energiebesparing en de
+            klimaatplannen van Gemeente Otterdam.
+          </p>
+        </div>
+        <div class="quiz-meta-panel">
+          <div class="quiz-meta-item">
+            <div class="quiz-meta-value">10</div>
+            <div class="quiz-meta-label">Vragen</div>
+          </div>
+          <div class="quiz-meta-item">
+            <div class="quiz-meta-value">~5</div>
+            <div class="quiz-meta-label">Minuten</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-strip">
+      <div class="wrap progress-inner">
+        <span class="progress-label">Voortgang</span>
+        <div class="progress-track">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <span class="progress-count" id="progressCount">0 / 10</span>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <main class="quiz-main">
+      <div class="wrap">
+        <div class="quiz-stage">
+          <!-- Info screen -->
+          <div class="info-screen" id="infoScreen">
+            <div class="info-screen-header">
+              <div class="info-screen-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"
+                  />
+                </svg>
+                Milieu &amp; Duurzaamheid
+              </div>
+              <h2>Over deze quiz</h2>
+              <p>
+                Hoe duurzaam is Gemeente Otterdam, en hoe kunt u zelf bijdragen?
+              </p>
+            </div>
+            <div class="info-screen-body">
+              <p>
+                Welkom bij de milieu- en duurzaamheidsquiz! Gemeente Otterdam
+                heeft ambitieuze plannen om klimaatneutraal te worden. Maar wat
+                betekent dat precies, en welke stappen worden er al gezet?
+              </p>
+              <p>
+                In deze quiz leert u meer over afvalscheiding, energiebesparing,
+                groene initiatieven en de rol die ú als inwoner kunt spelen in
+                een duurzamer Otterdam.
+              </p>
+              <div class="info-stats-row">
+                <div class="info-stat">
+                  <div class="info-stat-value">10</div>
+                  <div class="info-stat-label">Vragen</div>
+                </div>
+                <div class="info-stat">
+                  <div class="info-stat-value">~5</div>
+                  <div class="info-stat-label">Minuten</div>
+                </div>
+                <div class="info-stat">
+                  <div class="info-stat-value">Gem.</div>
+                  <div class="info-stat-label">Niveau</div>
+                </div>
+              </div>
+            </div>
+            <div class="info-screen-footer">
+              <button
+                class="btn btn-green"
+                onclick="startQuiz()"
+                style="width: 100%; justify-content: center"
+              >
+                Start de quiz
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Question card -->
+          <div class="question-card" id="questionCard">
+            <div class="question-header">
+              <p class="question-text" id="questionText"></p>
+              <span class="question-num" id="questionNum"></span>
+            </div>
+            <div class="answers-list" id="answersList"></div>
+            <div class="feedback-box" id="feedbackBox">
+              <div class="feedback-title" id="feedbackTitle"></div>
+              <span id="feedbackText"></span>
+            </div>
+            <div class="question-footer" id="questionFooter">
+              <button
+                class="btn btn-green"
+                onclick="nextQuestion()"
+                id="nextBtn"
+                style="width: 100%; justify-content: center"
+              ></button>
+            </div>
+          </div>
+
+          <!-- Results card -->
+          <div class="results-card" id="resultsCard">
+            <div class="results-header">
+              <div class="results-header-bg"></div>
+              <div class="results-header-glow"></div>
+              <div class="results-eyebrow">Quiz voltooid</div>
+              <div class="results-score" id="finalScore">0<span>/10</span></div>
+              <p class="results-message" id="resultsMessage"></p>
+            </div>
+            <div class="results-stats-row">
+              <div class="results-stat">
+                <div class="results-stat-value" id="correctCount">0</div>
+                <div class="results-stat-label">Correct</div>
+              </div>
+              <div class="results-stat">
+                <div class="results-stat-value" id="incorrectCount">0</div>
+                <div class="results-stat-label">Fout</div>
+              </div>
+              <div class="results-stat">
+                <div class="results-stat-value" id="percentage">0%</div>
+                <div class="results-stat-label">Score</div>
+              </div>
+            </div>
+            <div class="results-footer">
+              <button class="btn btn-green" onclick="location.reload()">
+                Opnieuw proberen
+              </button>
+              <a href="index2.html#quizzen" class="btn btn-outline"
+                >Andere quiz</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="wrap footer-inner">
+        <div class="footer-logo">Gemeente Otterdam</div>
+        <div class="footer-copy">© 2026 — Informatiezuil Gemeentehuis</div>
+        <div class="footer-status">
+          <span class="status-dot"></span>
+          Systeem operationeel
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const LETTERS = ["A", "B", "C", "D"];
+
+      const quizData = [
+        {
+          question: "Wat is het doel van afvalscheiding in Gemeente Otterdam?",
+          answers: [
+            "Minder vuilniswagens nodig hebben",
+            "Grondstoffen hergebruiken en afval verminderen",
+            "De vuilnisbak kleiner maken",
+            "Alleen plastic recyclen",
+          ],
+          correct: 1,
+          feedback: {
+            correct:
+              "Juist! Door afval te scheiden kunnen grondstoffen zoals papier, glas en plastic opnieuw worden gebruikt, wat de hoeveelheid restafval sterk vermindert.",
+            incorrect:
+              "Niet helemaal goed. Het doel van afvalscheiding is om grondstoffen te hergebruiken zodat er minder nieuwe materialen nodig zijn en er minder afval verbrand hoeft te worden.",
+          },
+        },
+        {
+          question:
+            "Welke kleur container is bestemd voor gft-afval (groente, fruit en tuinafval)?",
+          answers: [
+            "Grijze container",
+            "Blauwe container",
+            "Groene container",
+            "Oranje container",
+          ],
+          correct: 2,
+          feedback: {
+            correct:
+              "Correct! De groene container is bedoeld voor gft-afval. Dit wordt verwerkt tot compost en biogas.",
+            incorrect:
+              "Helaas niet goed. Gft-afval gaat in de groene container. Dit wordt omgezet naar compost voor de landbouw en soms ook naar biogas.",
+          },
+        },
+        {
+          question:
+            "Hoe kan een inwoner van Otterdam energie besparen in huis?",
+          answers: [
+            "Door de verwarming op 25°C te zetten",
+            "Door alle apparaten op stand-by te laten",
+            "Door LED-lampen te gebruiken en te isoleren",
+            "Door elke dag later de gordijnen open te doen",
+          ],
+          correct: 2,
+          feedback: {
+            correct:
+              "Goed zo! LED-lampen verbruiken tot 80% minder energie dan gloeilampen. Goede isolatie zorgt ervoor dat er minder gestookt hoeft te worden.",
+            incorrect:
+              "Helaas fout. Door LED-lampen te gebruiken en het huis goed te isoleren bespaar je veel energie en dus ook geld op je energierekening.",
+          },
+        },
+        {
+          question: "Wat betekent 'klimaatneutraal' voor een gemeente?",
+          answers: [
+            "Er is geen regen meer in de gemeente",
+            "De gemeente stoot netto geen CO₂ uit",
+            "De gemeente gebruikt alleen kernenergie",
+            "Er zijn geen auto's meer toegestaan",
+          ],
+          correct: 1,
+          feedback: {
+            correct:
+              "Precies! Klimaatneutraal betekent dat de gemeente evenveel CO₂ opneemt of compenseert als ze uitstoot — het nettoresultaat is nul.",
+            incorrect:
+              "Niet correct. Klimaatneutraal wil zeggen dat de netto uitstoot van broeikasgassen zoals CO₂ gelijk is aan nul, door te besparen en te compenseren.",
+          },
+        },
+        {
+          question:
+            "Welk initiatief helpt inwoners van Otterdam om zonnepanelen betaalbaar te installeren?",
+          answers: [
+            "Gemeentelijke zonnepanelen verhuur",
+            "Een collectieve inkoop via de gemeente of energiecoöperatie",
+            "Gratis zonnepanelen bij aankoop van een huis",
+            "Subsidie van de Europese Unie rechtstreeks aan burgers",
+          ],
+          correct: 1,
+          feedback: {
+            correct:
+              "Klopt! Via collectieve inkoopacties kunnen inwoners samen zonnepanelen kopen, waardoor de prijs per systeem aanzienlijk lager uitvalt.",
+            incorrect:
+              "Niet helemaal. Gemeentes en energiecoöperaties organiseren collectieve inkoopacties zodat inwoners samen korting kunnen bedingen op zonnepanelen.",
+          },
+        },
+        {
+          question: "Wat is een warmtepomp?",
+          answers: [
+            "Een apparaat dat warm water pompt naar de kraan",
+            "Een systeem dat warmte uit de omgeving haalt om een woning te verwarmen",
+            "Een pomp die de CV-ketel vult",
+            "Een zonneboiler voor op het dak",
+          ],
+          correct: 1,
+          feedback: {
+            correct:
+              "Juist! Een warmtepomp onttrekt warmte uit de buitenlucht, de bodem of het grondwater en gebruikt die om het huis te verwarmen — veel efficiënter dan een gasketel.",
+            incorrect:
+              "Helaas fout. Een warmtepomp haalt warmte uit de omgeving (lucht, bodem of water) en gebruikt die om een woning te verwarmen zonder gas te verbranden.",
+          },
+        },
+        {
+          question:
+            "Hoeveel procent van het afval in Nederland wordt momenteel gerecycled?",
+          answers: [
+            "Ongeveer 25%",
+            "Ongeveer 55%",
+            "Ongeveer 80%",
+            "Meer dan 95%",
+          ],
+          correct: 1,
+          feedback: {
+            correct:
+              "Correct! Nederland recyclet circa 55% van het totale afval. Gemeente Otterdam werkt aan verdere verbetering van de scheidingspercentages.",
+            incorrect:
+              "Niet helemaal. In Nederland wordt momenteel zo'n 55% van het afval gerecycled. Dat is al goed, maar de doelstelling is om dat verder omhoog te brengen.",
+          },
+        },
+        {
+          question:
+            "Wat is het effect van meer groen in de stad op het klimaat?",
+          answers: [
+            "Groen maakt de straten gladder bij regen",
+            "Meer groen verhoogt de temperatuur in de zomer",
+            "Groen vermindert hittestress en vangt regenwater op",
+            "Groen heeft geen effect op klimaat in de stad",
+          ],
+          correct: 2,
+          feedback: {
+            correct:
+              "Goed! Bomen en planten zorgen voor schaduw en verdamping, waardoor hittestress afneemt. Ze vangen ook regenwater op en beperken wateroverlast.",
+            incorrect:
+              "Helaas niet goed. Meer groen in de stad vermindert hittestress doordat planten verdampen en schaduw geven. Ze verbeteren ook de waterafvoer bij hevige regen.",
+          },
+        },
+        {
+          question:
+            "Welke manier van vervoer heeft de laagste CO₂-uitstoot per kilometer?",
+          answers: [
+            "Een benzineauto met één inzittende",
+            "Een elektrische auto opgeladen met groene stroom",
+            "De fiets",
+            "Een volle dieselbus",
+          ],
+          correct: 2,
+          feedback: {
+            correct:
+              "Precies! De fiets heeft vrijwel geen CO₂-uitstoot en is daarmee het duurzaamste vervoermiddel. Gemeente Otterdam investeert dan ook in meer fietsinfrastructuur.",
+            incorrect:
+              "Niet correct. De fiets wint het op alle fronten: nul uitstoot, geen brandstof en ook nog eens goed voor de gezondheid.",
+          },
+        },
+        {
+          question:
+            "Wat kan een inwoner doen met gevaarlijk afval zoals verf of batterijen?",
+          answers: [
+            "In de grijze container gooien",
+            "In de tuin begraven",
+            "Inleveren bij een milieustraat of chemicaliën-inzamelpunt",
+            "Doorspoelen via het toilet",
+          ],
+          correct: 2,
+          feedback: {
+            correct:
+              "Juist! Gevaarlijk afval hoort thuis bij de milieustraat of een inzamelpunt voor klein chemisch afval (kca). Zo wordt het veilig verwerkt zonder het milieu te schaden.",
+            incorrect:
+              "Helaas fout. Gevaarlijk afval moet altijd worden ingeleverd bij de milieustraat of een speciaal inzamelpunt — nooit weggooien met normaal afval of in water lozen.",
+          },
+        },
+      ];
+
+      let current = 0;
+      let score = 0;
+      let answered = false;
+
+      function startQuiz() {
+        document.getElementById("infoScreen").style.display = "none";
+        document.getElementById("questionCard").classList.add("active");
+        showQuestion();
+      }
+
+      function showQuestion() {
+        answered = false;
+        const q = quizData[current];
+
+        // Reset card animation
+        const card = document.getElementById("questionCard");
+        card.style.animation = "none";
+        void card.offsetHeight;
+        card.style.animation = "";
+
+        document.getElementById("questionNum").textContent =
+          `Vraag ${current + 1} / ${quizData.length}`;
+        document.getElementById("questionText").textContent = q.question;
+
+        const list = document.getElementById("answersList");
+        list.innerHTML = "";
+        q.answers.forEach((ans, i) => {
+          const btn = document.createElement("button");
+          btn.className = "answer-btn";
+          btn.innerHTML = `<span class="answer-letter">${LETTERS[i]}</span>${ans}`;
+          btn.onclick = () => checkAnswer(i);
+          list.appendChild(btn);
+        });
+
+        const fb = document.getElementById("feedbackBox");
+        fb.className = "feedback-box";
+        fb.style.display = "none";
+
+        const footer = document.getElementById("questionFooter");
+        footer.className = "question-footer";
+
+        // Update progress
+        const pct = (current / quizData.length) * 100;
+        document.getElementById("progressBar").style.width = pct + "%";
+        document.getElementById("progressCount").textContent =
+          `${current} / ${quizData.length}`;
+      }
+
+      function checkAnswer(idx) {
+        if (answered) return;
+        answered = true;
+
+        const q = quizData[current];
+        const isCorrect = idx === q.correct;
+        if (isCorrect) score++;
+
+        const btns = document.querySelectorAll(".answer-btn");
+        btns.forEach((btn, i) => {
+          btn.disabled = true;
+          if (i === q.correct) btn.classList.add("correct");
+          else if (i === idx && !isCorrect) btn.classList.add("incorrect");
+        });
+
+        // Show feedback
+        const fb = document.getElementById("feedbackBox");
+        fb.className = `feedback-box show ${isCorrect ? "correct" : "incorrect"}`;
+        fb.style.display = "block";
+
+        const icon = isCorrect
+          ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`
+          : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>`;
+
+        document.getElementById("feedbackTitle").innerHTML =
+          icon + (isCorrect ? "Correct!" : "Helaas, niet goed.");
+        document.getElementById("feedbackText").textContent = isCorrect
+          ? q.feedback.correct
+          : q.feedback.incorrect;
+
+        // Show next button
+        const footer = document.getElementById("questionFooter");
+        footer.className = "question-footer show";
+        const nextBtn = document.getElementById("nextBtn");
+        nextBtn.textContent =
+          current < quizData.length - 1
+            ? "Volgende vraag"
+            : "Bekijk resultaten";
+      }
+
+      function nextQuestion() {
+        current++;
+        if (current < quizData.length) {
+          showQuestion();
+        } else {
+          showResults();
+        }
+      }
+
+      function showResults() {
+        document.getElementById("questionCard").classList.remove("active");
+        document.getElementById("resultsCard").classList.add("active");
+
+        document.getElementById("progressBar").style.width = "100%";
+        document.getElementById("progressCount").textContent =
+          `${quizData.length} / ${quizData.length}`;
+
+        const pct = Math.round((score / quizData.length) * 100);
+        const wrong = quizData.length - score;
+
+        document.getElementById("finalScore").innerHTML =
+          `${score}<span>/${quizData.length}</span>`;
+        document.getElementById("correctCount").textContent = score;
+        document.getElementById("incorrectCount").textContent = wrong;
+        document.getElementById("percentage").textContent = pct + "%";
+
+        const messages = [
+          [80, "Uitstekend! U bent een echte duurzaamheidsexpert! 🌱"],
+          [60, "Goed gedaan! U weet al veel over milieu en duurzaamheid. 👍"],
+          [
+            40,
+            "Niet slecht, maar er valt nog wat te leren. Probeer het opnieuw! 📚",
+          ],
+          [0, "Blijf oefenen! Elke quiz brengt u meer kennis. 💪"],
+        ];
+
+        document.getElementById("resultsMessage").textContent = messages.find(
+          ([min]) => pct >= min,
+        )[1];
+
+        if (pct >= 80) launchConfetti();
+      }
+
+      function launchConfetti() {
+        const colors = ["#5a9e6f", "#b5a14a", "#4a7fa5", "#c46a2b", "#6a7ea8"];
+        for (let i = 0; i < 55; i++) {
+          setTimeout(() => {
+            const el = document.createElement("div");
+            const size = Math.random() * 9 + 5;
+            el.style.cssText = `position:fixed;left:${Math.random() * 100}vw;top:-20px;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random() * colors.length)]};border-radius:${Math.random() > 0.5 ? "50%" : "3px"};pointer-events:none;z-index:9999;`;
+            document.body.appendChild(el);
+            el.animate(
+              [
+                { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+                {
+                  transform: `translate(${(Math.random() - 0.5) * 150}px,${window.innerHeight + 30}px) rotate(${Math.random() * 720 - 360}deg)`,
+                  opacity: 0,
+                },
+              ],
+              {
+                duration: Math.random() * 2500 + 2000,
+                easing: "cubic-bezier(.25,.46,.45,.94)",
+              },
+            ).onfinish = () => el.remove();
+          }, i * 40);
+        }
+      }
+    </script>
+  </body>
+</html>
