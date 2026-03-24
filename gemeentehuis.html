@@ -454,6 +454,76 @@
         border-top: 1px solid var(--rule);
       }
 
+      /* Name input form */
+      .name-input-wrapper {
+        margin-bottom: 1.5rem;
+      }
+
+      .name-input-label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.01em;
+      }
+
+      .name-input-label .required {
+        color: var(--blue);
+        margin-left: 0.15rem;
+      }
+
+      .name-input-field {
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        color: var(--ink);
+        background: white;
+        border: 1.5px solid var(--rule);
+        border-radius: 10px;
+        transition: all 0.2s;
+        outline: none;
+      }
+
+      .name-input-field:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px oklch(44% 0.15 255 / 0.1);
+      }
+
+      .name-input-field::placeholder {
+        color: var(--ink-faint);
+        font-weight: 400;
+      }
+
+      .name-input-error {
+        display: none;
+        margin-top: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: oklch(45% 0.2 30);
+        background: oklch(95% 0.05 30);
+        border-left: 3px solid oklch(55% 0.2 30);
+        border-radius: 6px;
+      }
+
+      .name-input-error.visible {
+        display: block;
+        animation: fadeInDown 0.3s var(--ease-out-expo);
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       /* Question card */
       .question-card {
         background: white;
@@ -854,6 +924,233 @@
       .btn-outline:hover {
         border-color: var(--ink);
         color: var(--ink);
+      }
+
+      /* ── LEADERBOARD ── */
+      .leaderboard-card {
+        background: white;
+        border: 1.5px solid var(--rule);
+        border-radius: 20px;
+        overflow: hidden;
+        display: none;
+        margin-top: 2rem;
+        animation: cardIn 0.5s var(--ease-out-expo) both;
+      }
+
+      .leaderboard-card.active {
+        display: block;
+      }
+
+      .leaderboard-header {
+        padding: 2rem 2.5rem 1.5rem;
+        background: var(--blue-light);
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .leaderboard-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--blue-deep);
+        background: white;
+        padding: 0.3rem 0.75rem;
+        border-radius: 99px;
+        margin-bottom: 0.75rem;
+        border: 1px solid oklch(44% 0.15 255 / 0.2);
+      }
+
+      .leaderboard-badge svg {
+        width: 13px;
+        height: 13px;
+        color: var(--blue);
+      }
+
+      .leaderboard-header h3 {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        color: var(--ink);
+        margin-bottom: 0.25rem;
+      }
+
+      .leaderboard-header p {
+        font-size: 0.85rem;
+        color: var(--ink-muted);
+        font-weight: 300;
+      }
+
+      .leaderboard-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .leaderboard-table thead {
+        background: var(--paper-warm);
+        border-bottom: 1.5px solid var(--rule);
+      }
+
+      .leaderboard-table th {
+        padding: 0.875rem 1.5rem;
+        text-align: left;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-faint);
+      }
+
+      .leaderboard-table th:first-child {
+        padding-left: 2.5rem;
+        width: 80px;
+      }
+
+      .leaderboard-table th:last-child {
+        text-align: right;
+        padding-right: 2.5rem;
+        width: 100px;
+      }
+
+      .leaderboard-table tbody tr {
+        border-bottom: 1px solid var(--rule);
+        transition: background 0.2s;
+      }
+
+      .leaderboard-table tbody tr:last-child {
+        border-bottom: none;
+      }
+
+      .leaderboard-table tbody tr:hover {
+        background: oklch(97% 0.005 255 / 0.5);
+      }
+
+      .leaderboard-table tbody tr.user-highlight {
+        background: var(--blue-light);
+      }
+
+      .leaderboard-table tbody tr.user-highlight:hover {
+        background: oklch(90% 0.06 255);
+      }
+
+      .leaderboard-table td {
+        padding: 1.125rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .leaderboard-table td:first-child {
+        padding-left: 2.5rem;
+      }
+
+      .leaderboard-table td:last-child {
+        padding-right: 2.5rem;
+        text-align: right;
+      }
+
+      .leaderboard-rank {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .rank-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        font-weight: 700;
+        background: var(--paper-warm);
+        color: var(--ink-muted);
+        flex-shrink: 0;
+      }
+
+      .rank-badge.top-1 {
+        background: linear-gradient(
+          135deg,
+          oklch(75% 0.15 80) 0%,
+          oklch(65% 0.13 75) 100%
+        );
+        color: white;
+        box-shadow: 0 2px 8px oklch(72% 0.16 80 / 0.3);
+      }
+
+      .rank-badge.top-2 {
+        background: linear-gradient(
+          135deg,
+          oklch(70% 0.02 200) 0%,
+          oklch(60% 0.02 200) 100%
+        );
+        color: white;
+        box-shadow: 0 2px 8px oklch(65% 0.02 200 / 0.2);
+      }
+
+      .rank-badge.top-3 {
+        background: linear-gradient(
+          135deg,
+          oklch(62% 0.1 30) 0%,
+          oklch(52% 0.09 30) 100%
+        );
+        color: white;
+        box-shadow: 0 2px 8px oklch(60% 0.1 30 / 0.2);
+      }
+
+      .leaderboard-name {
+        font-weight: 500;
+        color: var(--ink);
+      }
+
+      .leaderboard-score {
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--blue);
+        letter-spacing: -0.02em;
+      }
+
+      .leaderboard-empty {
+        padding: 3rem 2.5rem;
+        text-align: center;
+      }
+
+      .leaderboard-empty-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1.25rem;
+        border-radius: 16px;
+        background: var(--blue-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .leaderboard-empty-icon svg {
+        width: 32px;
+        height: 32px;
+        color: var(--blue);
+      }
+
+      .leaderboard-empty h4 {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .leaderboard-empty p {
+        font-size: 0.9rem;
+        color: var(--ink-muted);
+        font-weight: 300;
+        max-width: 36ch;
+        margin: 0 auto;
       }
 
       /* Footer */
@@ -1279,6 +1576,21 @@
               </div>
             </div>
             <div class="info-screen-footer">
+              <div class="name-input-wrapper">
+                <label for="userName" class="name-input-label">
+                  Uw volledige naam<span class="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="userName"
+                  class="name-input-field"
+                  placeholder="Voornaam Achternaam"
+                  autocomplete="name"
+                />
+                <div class="name-input-error" id="nameError">
+                  Vul uw volledige naam in (voor- en achternaam).
+                </div>
+              </div>
               <button
                 class="btn btn-blue"
                 onclick="startQuiz()"
@@ -1342,12 +1654,29 @@
               </div>
             </div>
             <div class="results-footer">
-              <button class="btn btn-blue" onclick="location.reload()">
+              <button class="btn btn-blue" onclick="retakeQuiz()">
                 Opnieuw proberen
               </button>
               <a href="index2.html#quizzen" class="btn btn-outline"
                 >Andere quiz</a
               >
+            </div>
+          </div>
+
+          <!-- Leaderboard card -->
+          <div class="leaderboard-card" id="leaderboardCard">
+            <div class="leaderboard-header">
+              <div class="leaderboard-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+                </svg>
+                Klassement
+              </div>
+              <h3>Top 10 scores</h3>
+              <p>De beste resultaten voor deze quiz.</p>
+            </div>
+            <div id="leaderboardContent">
+              <!-- Content generated by renderLeaderboard() -->
             </div>
           </div>
         </div>
@@ -1528,12 +1857,319 @@
       let current = 0;
       let score = 0;
       let answered = false;
+      let userName = "";
+
+      function validateFullName(name) {
+        // Trim whitespace
+        const trimmed = name.trim();
+
+        // Must have at least 2 words (first and last name)
+        const words = trimmed.split(/\s+/).filter((word) => word.length > 0);
+
+        if (words.length < 2) {
+          return false;
+        }
+
+        // Each word should contain at least 2 letters
+        return words.every((word) => /[a-zA-ZÀ-ÿ]{2,}/.test(word));
+      }
 
       function startQuiz() {
+        const nameInput = document.getElementById("userName");
+        const nameError = document.getElementById("nameError");
+        const inputValue = nameInput.value;
+
+        // Validate name
+        if (!validateFullName(inputValue)) {
+          nameError.classList.add("visible");
+          nameInput.focus();
+          nameInput.style.borderColor = "oklch(55% 0.2 30)";
+
+          // Reset error styling after 3 seconds
+          setTimeout(() => {
+            nameError.classList.remove("visible");
+            nameInput.style.borderColor = "";
+          }, 3000);
+
+          return;
+        }
+
+        // Store the validated name
+        userName = inputValue.trim();
+
+        // Hide error and proceed
+        nameError.classList.remove("visible");
         document.getElementById("infoScreen").style.display = "none";
         document.getElementById("questionCard").classList.add("active");
         showQuestion();
       }
+
+      // ── LOCALSTORAGE SCORE MANAGEMENT ──
+      const QUIZ_ID = "gemeentehuis";
+      const STORAGE_KEY = "quizzie-gemeentehuis-scores";
+
+      /**
+       * Save a score to localStorage. If user already exists, keeps highest score only.
+       * @param {Object} scoreData - Score data object
+       * @param {string} scoreData.userName - User's full name
+       * @param {number} scoreData.score - Number of correct answers (0-10)
+       * @param {number} scoreData.total - Total number of questions
+       * @param {number} scoreData.percentage - Score percentage (0-100)
+       */
+      function saveScore(scoreData) {
+        try {
+          const scores = getQuizScores();
+          const normalizedName = scoreData.userName.toLowerCase().trim();
+
+          // Find existing score for this user
+          const existingIndex = scores.findIndex(
+            (s) => s.userName.toLowerCase().trim() === normalizedName,
+          );
+
+          const newScore = {
+            quizId: QUIZ_ID,
+            userName: scoreData.userName, // Keep original capitalization
+            score: scoreData.score,
+            total: scoreData.total,
+            percentage: scoreData.percentage,
+            timestamp: new Date().toISOString(),
+          };
+
+          if (existingIndex !== -1) {
+            // User exists - keep only if new score is higher
+            if (scoreData.percentage > scores[existingIndex].percentage) {
+              scores[existingIndex] = newScore;
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+              return { updated: true, isHighScore: true };
+            } else {
+              // Keep existing higher score, but update timestamp of attempt
+              return { updated: false, isHighScore: false };
+            }
+          } else {
+            // New user - add to scores
+            scores.push(newScore);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+            return { updated: true, isHighScore: true };
+          }
+        } catch (error) {
+          console.error("Error saving score:", error);
+          return { updated: false, isHighScore: false, error: error.message };
+        }
+      }
+
+      /**
+       * Retrieve all scores for this quiz from localStorage
+       * @returns {Array} Array of score objects
+       */
+      function getQuizScores() {
+        try {
+          const stored = localStorage.getItem(STORAGE_KEY);
+          if (!stored) return [];
+
+          const scores = JSON.parse(stored);
+
+          // Validate data structure
+          if (!Array.isArray(scores)) return [];
+
+          return scores.filter(
+            (s) =>
+              s &&
+              s.quizId === QUIZ_ID &&
+              s.userName &&
+              typeof s.percentage === "number",
+          );
+        } catch (error) {
+          console.error("Error retrieving scores:", error);
+          return [];
+        }
+      }
+
+      /**
+       * Get sorted leaderboard (highest scores first)
+       * @param {number} limit - Maximum number of scores to return (default: 10)
+       * @returns {Array} Sorted array of top scores
+       */
+      function getLeaderboard(limit = 10) {
+        const scores = getQuizScores();
+
+        // Sort by percentage (descending), then by timestamp (most recent first)
+        const sorted = scores.sort((a, b) => {
+          if (b.percentage !== a.percentage) {
+            return b.percentage - a.percentage;
+          }
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+
+        return sorted.slice(0, limit);
+      }
+
+      /**
+       * Check if a user has previously completed this quiz
+       * @param {string} userName - User's full name
+       * @returns {Object|null} Previous score object or null
+       */
+      function getPreviousScore(userName) {
+        const scores = getQuizScores();
+        const normalizedName = userName.toLowerCase().trim();
+
+        return (
+          scores.find(
+            (s) => s.userName.toLowerCase().trim() === normalizedName,
+          ) || null
+        );
+      }
+
+      /**
+       * Clear all scores for this quiz (for testing/reset)
+       */
+      function clearQuizScores() {
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+          return true;
+        } catch (error) {
+          console.error("Error clearing scores:", error);
+          return false;
+        }
+      }
+
+      /**
+       * Render the leaderboard with current scores
+       * @param {boolean} showCard - Whether to show the leaderboard card (default: true)
+       */
+      function renderLeaderboard(showCard = true) {
+        const leaderboard = getLeaderboard(10);
+        const contentDiv = document.getElementById("leaderboardContent");
+        const cardDiv = document.getElementById("leaderboardCard");
+
+        if (!contentDiv) return;
+
+        // Show or hide the card
+        if (showCard && cardDiv) {
+          cardDiv.classList.add("active");
+        }
+
+        // Empty state
+        if (leaderboard.length === 0) {
+          contentDiv.innerHTML = `
+            <div class="leaderboard-empty">
+              <div class="leaderboard-empty-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </div>
+              <h4>Nog geen scores</h4>
+              <p>Wees de eerste om deze quiz te voltooien en kom op het klassement!</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Build table HTML
+        let tableHTML = `
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Rang</th>
+                <th>Naam</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        leaderboard.forEach((entry, index) => {
+          const rank = index + 1;
+          const isCurrentUser =
+            userName &&
+            entry.userName.toLowerCase().trim() ===
+              userName.toLowerCase().trim();
+          const rowClass = isCurrentUser ? ' class="user-highlight"' : "";
+          const rankBadgeClass = rank <= 3 ? ` top-${rank}` : "";
+
+          tableHTML += `
+            <tr${rowClass}>
+              <td>
+                <div class="leaderboard-rank">
+                  <div class="rank-badge${rankBadgeClass}">${rank}</div>
+                </div>
+              </td>
+              <td>
+                <div class="leaderboard-name">${escapeHtml(entry.userName)}</div>
+              </td>
+              <td>
+                <div class="leaderboard-score">${entry.percentage}%</div>
+              </td>
+            </tr>
+          `;
+        });
+
+        tableHTML += `
+            </tbody>
+          </table>
+        `;
+
+        contentDiv.innerHTML = tableHTML;
+      }
+
+      /**
+       * Escape HTML to prevent XSS
+       */
+      function escapeHtml(text) {
+        const div = document.createElement("div");
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      /**
+       * Retake quiz - resets quiz state but preserves scores
+       */
+      function retakeQuiz() {
+        // Reset quiz state
+        current = 0;
+        score = 0;
+        answered = false;
+
+        // Hide results and leaderboard
+        document.getElementById("resultsCard").classList.remove("active");
+        document.getElementById("leaderboardCard").classList.remove("active");
+
+        // Show info screen again
+        document.getElementById("infoScreen").style.display = "block";
+
+        // Pre-fill the user's name for convenience
+        const nameInput = document.getElementById("userName");
+        if (nameInput && userName) {
+          nameInput.value = userName;
+        }
+
+        // Reset progress bar
+        document.getElementById("progressBar").style.width = "0%";
+        document.getElementById("progressCount").textContent = "0 / 10";
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // Allow Enter key to submit
+      document.addEventListener("DOMContentLoaded", function () {
+        const nameInput = document.getElementById("userName");
+        if (nameInput) {
+          nameInput.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+              startQuiz();
+            }
+          });
+
+          // Clear error on input
+          nameInput.addEventListener("input", function () {
+            const nameError = document.getElementById("nameError");
+            if (nameError.classList.contains("visible")) {
+              nameError.classList.remove("visible");
+              nameInput.style.borderColor = "";
+            }
+          });
+        }
+      });
 
       function showQuestion() {
         answered = false;
@@ -1646,6 +2282,21 @@
         )[1];
 
         if (pct >= 80) launchConfetti();
+
+        // Save score to localStorage
+        const scoreData = {
+          userName: userName,
+          score: score,
+          total: quizData.length,
+          percentage: pct,
+        };
+
+        const saveResult = saveScore(scoreData);
+
+        // Show leaderboard after brief delay for better UX
+        setTimeout(() => {
+          renderLeaderboard(true);
+        }, 800);
       }
 
       function launchConfetti() {
