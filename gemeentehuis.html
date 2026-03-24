@@ -2268,7 +2268,7 @@
         }
       }
 
-      function showResults() {
+      async function showResults() {
         document.getElementById("questionCard").classList.remove("active");
         document.getElementById("resultsCard").classList.add("active");
 
@@ -2301,7 +2301,7 @@
 
         if (pct >= 80) launchConfetti();
 
-        // Save score to localStorage
+        // Save score to MongoDB via API
         const scoreData = {
           userName: userName,
           score: score,
@@ -2309,7 +2309,7 @@
           percentage: pct,
         };
 
-        const saveResult = saveScore(scoreData);
+        const saveResult = await saveScore(scoreData);
 
         // Show leaderboard after brief delay for better UX
         setTimeout(() => {
