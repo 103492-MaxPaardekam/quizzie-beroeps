@@ -105,7 +105,8 @@
       .wrap {
         max-width: 1360px;
         margin: 0 auto;
-        padding: 0 clamp(1.5rem, 5vw, 4rem);
+        padding-left: max(clamp(1.5rem, 5vw, 4rem), env(safe-area-inset-left));
+        padding-right: max(clamp(1.5rem, 5vw, 4rem), env(safe-area-inset-right));
       }
 
       /* ============================================
