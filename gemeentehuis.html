@@ -96,7 +96,10 @@
         max-width: 1360px;
         margin: 0 auto;
         padding-left: max(clamp(1.5rem, 5vw, 4rem), env(safe-area-inset-left));
-        padding-right: max(clamp(1.5rem, 5vw, 4rem), env(safe-area-inset-right));
+        padding-right: max(
+          clamp(1.5rem, 5vw, 4rem),
+          env(safe-area-inset-right)
+        );
       }
 
       /* ── NAV ── */
@@ -1475,6 +1478,149 @@
         .status-dot {
           width: 9px;
           height: 9px;
+        }
+      }
+
+      /* ============================================
+         PHONE-SPECIFIC BREAKPOINTS
+         Fine-grained responsive support
+         ============================================ */
+
+      /* Small phones (320px - 480px) */
+      @media (max-width: 480px) {
+        html {
+          font-size: 17px;
+        }
+
+        .wrap {
+          padding-left: max(1.25rem, env(safe-area-inset-left));
+          padding-right: max(1.25rem, env(safe-area-inset-right));
+        }
+
+        /* Hero */
+        .quiz-hero {
+          padding: 5rem 0 3rem;
+        }
+
+        .quiz-hero-title {
+          font-size: clamp(2.5rem, 12vw, 3.5rem);
+          line-height: 1.05;
+        }
+
+        .quiz-hero-sub {
+          font-size: 1rem;
+        }
+
+        .quiz-meta-panel {
+          padding: 1.5rem;
+        }
+
+        /* Info screen */
+        .info-screen-header,
+        .info-screen-body {
+          padding: 2rem 1.5rem;
+        }
+
+        .info-screen-footer {
+          padding: 1.75rem 1.5rem;
+        }
+
+        /* Question card */
+        .question-card {
+          padding: 2rem 1.5rem;
+        }
+
+        .answer-btn {
+          min-height: 56px;
+          padding: 1rem 1.25rem;
+          font-size: 1rem;
+        }
+
+        .answer-letter {
+          width: 36px;
+          height: 36px;
+          font-size: 0.9rem;
+        }
+
+        /* Results */
+        .results-header {
+          padding: 2.5rem 1.75rem 2rem;
+        }
+
+        .results-score {
+          font-size: clamp(4rem, 16vw, 6rem);
+        }
+
+        /* Leaderboard */
+        .leaderboard-card {
+          padding: 0 1.5rem 1.5rem;
+        }
+
+        .leaderboard-header {
+          padding: 2rem 0 1.5rem;
+        }
+      }
+
+      /* Medium phones & phablets (481px - 640px) */
+      @media (min-width: 481px) and (max-width: 640px) {
+        .quiz-meta-panel {
+          flex-direction: row;
+          width: 100%;
+          max-width: 400px;
+        }
+
+        .info-stats-row {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Tablets (641px - 900px) */
+      @media (min-width: 641px) and (max-width: 900px) {
+        .quiz-hero-inner {
+          gap: 2.5rem;
+        }
+
+        .quiz-stage:has(.info-screen):has(.leaderboard-card.active) {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Landscape phone adjustments */
+      @media (max-height: 600px) and (orientation: landscape) {
+        .quiz-hero {
+          padding: 2.5rem 0 2rem;
+        }
+
+        .quiz-hero-title {
+          font-size: 2.5rem;
+        }
+
+        .info-screen-header,
+        .results-header {
+          padding: 2rem 2rem 1.5rem;
+        }
+      }
+
+      /* Touch devices: larger tap targets */
+      @media (pointer: coarse) {
+        .btn {
+          min-height: 48px;
+          padding: 0.875rem 1.75rem;
+        }
+
+        .answer-btn {
+          min-height: 56px;
+          padding: 1.15rem 1.5rem;
+          gap: 1rem;
+        }
+
+        .nav-back {
+          min-height: 48px;
+          padding: 0.75rem 1.25rem;
+        }
+
+        .nav-logo {
+          padding: 0.5rem 0;
         }
       }
 
