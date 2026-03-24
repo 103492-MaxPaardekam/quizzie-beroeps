@@ -1935,53 +1935,44 @@
         showQuestion();
       }
 
-      // ── LOCALSTORAGE SCORE MANAGEMENT ──
+      // ── MONGODB API SCORE MANAGEMENT ──
       const QUIZ_ID = "milieu";
-      const STORAGE_KEY = "quizzie-milieu-scores";
+      const API_BASE_URL = "http://localhost:3000/api";
 
       /**
-       * Save a score to localStorage. If user already exists, keeps highest score only.
+       * Save a score to MongoDB via API. If user already exists, keeps highest score only.
        * @param {Object} scoreData - Score data object
        * @param {string} scoreData.userName - User's full name
        * @param {number} scoreData.score - Number of correct answers (0-10)
        * @param {number} scoreData.total - Total number of questions
        * @param {number} scoreData.percentage - Score percentage (0-100)
        */
-      function saveScore(scoreData) {
+      async function saveScore(scoreData) {
         try {
-          const scores = getQuizScores();
-          const normalizedName = scoreData.userName.toLowerCase().trim();
+          const response = await fetch(`${API_BASE_URL}/scores`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              quizId: QUIZ_ID,
+              userName: scoreData.userName,
+              score: scoreData.score,
+              total: scoreData.total,
+              percentage: scoreData.percentage,
+            }),
+          });
 
-          // Find existing score for this user
-          const existingIndex = scores.findIndex(
-            (s) => s.userName.toLowerCase().trim() === normalizedName,
-          );
+          const data = await response.json();
 
-          const newScore = {
-            quizId: QUIZ_ID,
-            userName: scoreData.userName, // Keep original capitalization
-            score: scoreData.score,
-            total: scoreData.total,
-            percentage: scoreData.percentage,
-            timestamp: new Date().toISOString(),
-          };
-
-          if (existingIndex !== -1) {
-            // User exists - keep only if new score is higher
-            if (scoreData.percentage > scores[existingIndex].percentage) {
-              scores[existingIndex] = newScore;
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
-              return { updated: true, isHighScore: true };
-            } else {
-              // Keep existing higher score, but update timestamp of attempt
-              return { updated: false, isHighScore: false };
-            }
-          } else {
-            // New user - add to scores
-            scores.push(newScore);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
-            return { updated: true, isHighScore: true };
+          if (!data.success) {
+            throw new Error(data.error || "Failed to save score");
           }
+
+          return {
+            updated: data.updated,
+            isHighScore: data.isHighScore,
+          };
         } catch (error) {
           console.error("Error saving score:", error);
           return { updated: false, isHighScore: false, error: error.message };
@@ -1989,26 +1980,19 @@
       }
 
       /**
-       * Retrieve all scores for this quiz from localStorage
+       * Retrieve all scores for this quiz from MongoDB
        * @returns {Array} Array of score objects
        */
-      function getQuizScores() {
+      async function getQuizScores() {
         try {
-          const stored = localStorage.getItem(STORAGE_KEY);
-          if (!stored) return [];
+          const response = await fetch(`${API_BASE_URL}/scores/${QUIZ_ID}`);
+          const data = await response.json();
 
-          const scores = JSON.parse(stored);
+          if (!data.success) {
+            throw new Error(data.error || "Failed to fetch scores");
+          }
 
-          // Validate data structure
-          if (!Array.isArray(scores)) return [];
-
-          return scores.filter(
-            (s) =>
-              s &&
-              s.quizId === QUIZ_ID &&
-              s.userName &&
-              typeof s.percentage === "number",
-          );
+          return data.scores || [];
         } catch (error) {
           console.error("Error retrieving scores:", error);
           return [];
@@ -2020,18 +2004,22 @@
        * @param {number} limit - Maximum number of scores to return (default: 10)
        * @returns {Array} Sorted array of top scores
        */
-      function getLeaderboard(limit = 10) {
-        const scores = getQuizScores();
+      async function getLeaderboard(limit = 10) {
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/leaderboard/${QUIZ_ID}?limit=${limit}`,
+          );
+          const data = await response.json();
 
-        // Sort by percentage (descending), then by timestamp (most recent first)
-        const sorted = scores.sort((a, b) => {
-          if (b.percentage !== a.percentage) {
-            return b.percentage - a.percentage;
+          if (!data.success) {
+            throw new Error(data.error || "Failed to fetch leaderboard");
           }
-          return new Date(b.timestamp) - new Date(a.timestamp);
-        });
 
-        return sorted.slice(0, limit);
+          return data.leaderboard || [];
+        } catch (error) {
+          console.error("Error fetching leaderboard:", error);
+          return [];
+        }
       }
 
       /**
@@ -2039,23 +2027,38 @@
        * @param {string} userName - User's full name
        * @returns {Object|null} Previous score object or null
        */
-      function getPreviousScore(userName) {
-        const scores = getQuizScores();
-        const normalizedName = userName.toLowerCase().trim();
+      async function getPreviousScore(userName) {
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/user-score/${QUIZ_ID}/${encodeURIComponent(userName)}`,
+          );
+          const data = await response.json();
 
-        return (
-          scores.find(
-            (s) => s.userName.toLowerCase().trim() === normalizedName,
-          ) || null
-        );
+          if (!data.success) {
+            throw new Error(data.error || "Failed to fetch user score");
+          }
+
+          return data.score || null;
+        } catch (error) {
+          console.error("Error fetching previous score:", error);
+          return null;
+        }
       }
 
       /**
        * Clear all scores for this quiz (for testing/reset)
        */
-      function clearQuizScores() {
+      async function clearQuizScores() {
         try {
-          localStorage.removeItem(STORAGE_KEY);
+          const response = await fetch(`${API_BASE_URL}/scores/${QUIZ_ID}`, {
+            method: "DELETE",
+          });
+          const data = await response.json();
+
+          if (!data.success) {
+            throw new Error(data.error || "Failed to clear scores");
+          }
+
           return true;
         } catch (error) {
           console.error("Error clearing scores:", error);
@@ -2067,17 +2070,32 @@
        * Render the leaderboard with current scores
        * @param {boolean} showCard - Whether to show the leaderboard card (default: true)
        */
-      function renderLeaderboard(showCard = true) {
-        const leaderboard = getLeaderboard(10);
+      async function renderLeaderboard(showCard = true) {
         const contentDiv = document.getElementById("leaderboardContent");
         const cardDiv = document.getElementById("leaderboardCard");
 
         if (!contentDiv) return;
 
+        // Show loading state
+        contentDiv.innerHTML = `
+          <div class="leaderboard-empty">
+            <div class="leaderboard-empty-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </div>
+            <h4>Laden...</h4>
+            <p>Klassement wordt opgehaald...</p>
+          </div>
+        `;
+
         // Show or hide the card
         if (showCard && cardDiv) {
           cardDiv.classList.add("active");
         }
+
+        // Fetch leaderboard data
+        const leaderboard = await getLeaderboard(10);
 
         // Empty state
         if (leaderboard.length === 0) {
@@ -2289,7 +2307,7 @@
         }
       }
 
-      function showResults() {
+      async function showResults() {
         document.getElementById("questionCard").classList.remove("active");
         document.getElementById("resultsCard").classList.add("active");
 
@@ -2322,7 +2340,7 @@
 
         if (pct >= 80) launchConfetti();
 
-        // Save score to localStorage
+        // Save score to MongoDB via API
         const scoreData = {
           userName: userName,
           score: score,
@@ -2330,7 +2348,7 @@
           percentage: pct,
         };
 
-        const saveResult = saveScore(scoreData);
+        const saveResult = await saveScore(scoreData);
 
         // Show leaderboard after brief delay for better UX
         setTimeout(() => {
