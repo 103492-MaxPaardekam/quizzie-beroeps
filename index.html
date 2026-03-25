@@ -1846,9 +1846,10 @@
 
       /* ── Touch devices: larger tap targets ── */
       @media (pointer: coarse) {
+        /* Ensure all interactive elements are at least 44x44px */
         .btn {
-          min-height: 48px;
-          padding: 0.875rem 1.75rem;
+          min-height: 52px;
+          padding: 1rem 2rem;
         }
 
         .quiz-card {
@@ -1856,19 +1857,40 @@
         }
 
         .nav-links a {
+          min-height: 48px;
           padding: 0.75rem 1.25rem;
           margin: 0 0.25rem;
+          display: flex;
+          align-items: center;
+        }
+
+        .nav-mobile-links a {
+          min-height: 56px;
+          padding: 1rem 2rem;
+          display: flex;
+          align-items: center;
         }
 
         /* Ensure adequate spacing between touch targets */
         .hero-actions {
-          gap: 1rem;
+          gap: 1.25rem;
         }
 
         .steps-grid,
         .quiz-grid,
         .team-grid {
-          gap: 1.25rem;
+          gap: 1.5rem;
+        }
+
+        .nav-toggle {
+          width: 48px;
+          height: 48px;
+        }
+
+        /* Make quiz card buttons more prominent on touch */
+        .quiz-card-footer .btn {
+          min-height: 56px;
+          font-size: 1.05rem;
         }
       }
 

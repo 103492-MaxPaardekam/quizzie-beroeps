@@ -40,13 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Close menu on escape key
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && navElement.classList.contains("menu-open")) {
-      closeMobileMenu();
-    }
-  });
-
   /* ─────────────────────────────────
      SMOOTH SCROLL NAVIGATION
   ───────────────────────────────── */
