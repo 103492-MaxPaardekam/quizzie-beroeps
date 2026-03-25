@@ -18,10 +18,7 @@
       rel="stylesheet"
     />
     <style>
-      /* ============================================
-         QUIZZIE — Gemeente Otterdam — REDESIGN
-         Aesthetic: Civic Grandeur / Editorial Precision
-         ============================================ */
+      /* Quizzie Styles */
 
       :root {
         --ink: oklch(14% 0.02 260);
@@ -83,7 +80,7 @@
         display: block;
       }
 
-      /* ─── SCROLLBAR ─── */
+      /* Scrollbar */
       ::-webkit-scrollbar {
         width: 6px;
       }
@@ -95,13 +92,13 @@
         border-radius: 99px;
       }
 
-      /* ─── SELECTION ─── */
+      /* Selection */
       ::selection {
         background: var(--gold-light);
         color: var(--ink);
       }
 
-      /* ─── CONTAINER ─── */
+      /* Container */
       .wrap {
         max-width: 1360px;
         margin: 0 auto;
@@ -112,9 +109,7 @@
         );
       }
 
-      /* ============================================
-         NAVIGATION
-         ============================================ */
+      /* Navigation */
       .nav {
         position: fixed;
         top: 0;
@@ -216,7 +211,7 @@
         color: var(--gold-deep);
       }
 
-      /* ─── MOBILE NAV TOGGLE ─── */
+      /* Mobile toggle */
       .nav-toggle {
         display: none;
         flex-direction: column;
@@ -261,7 +256,7 @@
         transform: translateY(-8px) rotate(-45deg);
       }
 
-      /* ─── MOBILE MENU OVERLAY ─── */
+      /* Mobile menu */
       .nav-mobile-menu {
         position: fixed;
         top: 0;
@@ -307,7 +302,7 @@
         border-left-color: var(--gold);
       }
 
-      /* Mobile menu backdrop */
+      /* Menu backdrop */
       .nav-mobile-backdrop {
         position: fixed;
         inset: 0;
@@ -323,9 +318,7 @@
         pointer-events: auto;
       }
 
-      /* ============================================
-         HERO — FULL HEIGHT, EDITORIAL ARCHITECTURE
-         ============================================ */
+      /* Hero section */
       .hero {
         position: relative;
         min-height: 100svh;
@@ -335,7 +328,7 @@
         background: var(--ink);
       }
 
-      /* Large geometric background */
+      /* Background */
       .hero-bg {
         position: absolute;
         inset: 0;
@@ -468,7 +461,7 @@
         animation: fadeUp 0.8s 0.32s var(--ease-out-expo) both;
       }
 
-      /* Hero right — stat panel */
+      /* Stats panel */
       .hero-right {
         animation: fadeUp 0.8s 0.2s var(--ease-out-expo) both;
       }
@@ -535,7 +528,7 @@
         vertical-align: middle;
       }
 
-      /* Hero bottom bar */
+      /* Bottom bar */
       .hero-bar {
         position: relative;
         z-index: 2;
@@ -613,9 +606,7 @@
         font-weight: 700;
       }
 
-      /* ============================================
-         BUTTONS
-         ============================================ */
+      /* Buttons */
       .btn {
         display: inline-flex;
         align-items: center;
@@ -704,9 +695,7 @@
         background: transparent;
       }
 
-      /* ============================================
-         SECTION SHARED
-         ============================================ */
+      /* Section shared */
       section {
         position: relative;
       }
@@ -764,9 +753,7 @@
         margin-bottom: clamp(3rem, 5vw, 5rem);
       }
 
-      /* ============================================
-         HOW IT WORKS — SPLIT LAYOUT
-         ============================================ */
+      /* How it works */
       #info {
         background: white;
       }
@@ -879,9 +866,7 @@
         color: var(--gold-deep);
       }
 
-      /* ============================================
-         QUIZZEN — LARGE EDITORIAL CARDS
-         ============================================ */
+      /* Quizzes */
       #quizzen {
         background: var(--paper);
       }
@@ -1063,7 +1048,7 @@
         flex-wrap: wrap;
       }
 
-      /* Upcoming strip */
+      /* Upcoming */
       .quiz-upcoming {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1253,9 +1238,7 @@
         font-weight: 300;
       }
 
-      /* ============================================
-         FOOTER
-         ============================================ */
+      /* Footer */
       footer {
         background: oklch(11% 0.015 260);
         border-top: 1px solid oklch(100% 0 0 / 0.06);
@@ -1340,24 +1323,19 @@
         transform: translateY(0);
       }
 
-      /* ============================================
-         KIOSK / PORTRAIT — RESPONSIVE OVERRIDES
-         Target: portrait touch screen (city hall kiosk)
-         Priorities: single-column, large accessible text,
-         generous touch targets, breathing room
-         ============================================ */
+      /* Portrait/mobile */
 
-      /* Triggers on portrait orientation (kiosk screen) OR narrow viewports */
+      /* Portrait orientation */
       @media (orientation: portrait), (max-width: 900px) {
         html {
-          font-size: 19px; /* base upscale for accessibility */
+          font-size: 19px;
         }
 
         .wrap {
           padding: 0 clamp(2rem, 5vw, 4.5rem);
         }
 
-        /* ── NAV ── */
+        /* Nav */
         .nav-inner {
           height: 84px;
         }
@@ -1379,18 +1357,18 @@
         }
 
         .nav-links {
-          display: none; /* Hide desktop nav on mobile */
+          display: none;
         }
 
         .nav-toggle {
-          display: flex; /* Show hamburger button */
+          display: flex;
         }
 
         .nav-mobile-menu {
-          display: block; /* Enable mobile menu */
+          display: block;
         }
 
-        /* ── HERO ── */
+        /* Hero */
         .hero-content {
           grid-template-columns: 1fr;
           padding: 8rem 0 5.5rem;
@@ -1450,7 +1428,7 @@
           height: 34px;
         }
 
-        /* ── TICKER ── */
+        /* Ticker */
         .ticker-strip {
           padding: 1rem 0;
         }
@@ -1461,7 +1439,7 @@
           gap: 1rem;
         }
 
-        /* ── SECTIONS ── */
+        /* Sections */
         .section-wrap {
           padding: clamp(4.5rem, 9vw, 7rem) 0;
         }
@@ -1485,7 +1463,7 @@
           margin-bottom: clamp(2.5rem, 5vw, 4rem);
         }
 
-        /* ── INFO / HOW IT WORKS ── */
+        /* Info */
         .info-layout {
           grid-template-columns: 1fr;
           gap: 3.5rem;
@@ -1527,7 +1505,7 @@
           height: 15px;
         }
 
-        /* ── QUIZZEN ── */
+        /* Quizzes */
         .quizzen-header {
           flex-direction: column;
           align-items: flex-start;
@@ -1619,7 +1597,7 @@
           font-size: 0.9rem;
         }
 
-        /* ── TEAM ── */
+        /* Team */
         .team-grid {
           grid-template-columns: 1fr;
         }
@@ -1656,7 +1634,7 @@
           padding: 1rem 1.5rem;
         }
 
-        /* ── FOOTER ── */
+        /* Footer */
         .footer-inner {
           flex-direction: column;
           align-items: flex-start;
@@ -1681,7 +1659,7 @@
           height: 9px;
         }
 
-        /* ── GENERAL BUTTONS ── */
+        /* Buttons */
         .btn {
           min-height: 60px;
           font-size: 1rem;
@@ -1689,15 +1667,12 @@
         }
       }
 
-      /* ============================================
-         ADDITIONAL RESPONSIVE BREAKPOINTS
-         More granular support for phones & tablets
-         ============================================ */
+      /* Responsive breakpoints */
 
-      /* Small phones (320px - 480px) */
+      /* Small phones */
       @media (max-width: 480px) {
         html {
-          font-size: 17px; /* Base font size for better readability */
+          font-size: 17px;
         }
 
         .wrap {
@@ -1735,7 +1710,7 @@
           font-size: 1rem;
         }
 
-        /* Section headers - improve readability */
+        /* Section headers */
         .section-title {
           font-size: clamp(2rem, 8vw, 3rem);
           line-height: 1.15;
@@ -1747,7 +1722,7 @@
           line-height: 1.75;
         }
 
-        /* Quiz cards - single column with better spacing */
+        /* Quiz cards */
         .quiz-grid {
           grid-template-columns: 1fr;
           gap: 1.5px;
@@ -1774,7 +1749,7 @@
           font-size: 0.95rem;
         }
 
-        /* Steps - better readability */
+        /* Steps */
         .step-item {
           padding: 1.75rem 0;
         }
@@ -1797,7 +1772,7 @@
         }
       }
 
-      /* Medium phones (481px - 640px) */
+      /* Medium phones */
       @media (min-width: 481px) and (max-width: 640px) {
         .quiz-grid {
           grid-template-columns: 1fr;
@@ -1814,7 +1789,7 @@
         }
       }
 
-      /* Tablets (641px - 900px) */
+      /* Tablets */
       @media (min-width: 641px) and (max-width: 900px) {
         .quiz-grid {
           grid-template-columns: 1fr 1fr;
@@ -1829,7 +1804,7 @@
         }
       }
 
-      /* Large tablets & small laptops (901px - 1200px) */
+      /* Large tablets */
       @media (min-width: 901px) and (max-width: 1200px) {
         .hero-title {
           font-size: 4.25rem;
@@ -1841,7 +1816,7 @@
         }
       }
 
-      /* Landscape phone adjustments */
+      /* Landscape mobile */
       @media (max-height: 600px) and (orientation: landscape) {
         .hero {
           padding: 2.5rem 0 2rem;
@@ -1866,7 +1841,7 @@
         }
       }
 
-      /* ── Touch devices: remove hover-only micro-movements ── */
+      /* Touch devices */
       @media (hover: none) {
         .quiz-card:not(.quiz-card--disabled):hover {
           transform: none;
@@ -1885,9 +1860,9 @@
         }
       }
 
-      /* ── Touch devices: larger tap targets ── */
+      /* Touch targets */
       @media (pointer: coarse) {
-        /* Ensure all interactive elements are at least 44x44px */
+        /* Interactive elements */
         .btn {
           min-height: 52px;
           padding: 1rem 2rem;
@@ -1912,7 +1887,7 @@
           align-items: center;
         }
 
-        /* Ensure adequate spacing between touch targets */
+        /* Spacing */
         .hero-actions {
           gap: 1.25rem;
         }
@@ -1928,16 +1903,14 @@
           height: 48px;
         }
 
-        /* Make quiz card buttons more prominent on touch */
+        /* Quiz buttons */
         .quiz-card-footer .btn {
           min-height: 56px;
           font-size: 1.05rem;
         }
       }
 
-      /* ============================================
-         DECORATIVE RULE DIVIDER
-         ============================================ */
+      /* Rule divider */
       .rule-divider {
         display: flex;
         align-items: center;
@@ -1961,9 +1934,7 @@
         flex-shrink: 0;
       }
 
-      /* ============================================
-         TICKER / MARQUEE STRIP (below hero)
-         ============================================ */
+      /* Ticker strip */
       .ticker-strip {
         background: var(--gold);
         overflow: hidden;
