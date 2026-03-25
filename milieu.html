@@ -35,7 +35,7 @@
         --blue: oklch(44% 0.15 255);
         --blue-light: oklch(92% 0.05 255);
 
-        /* Quiz theme: green */
+        /* Green theme */
         --theme: var(--green);
         --theme-deep: var(--green-deep);
         --theme-light: var(--green-light);
@@ -102,7 +102,7 @@
         );
       }
 
-      /* ── NAV ── */
+      /* Nav */
       .nav {
         position: fixed;
         top: 0;
@@ -175,7 +175,7 @@
         height: 15px;
       }
 
-      /* ── HERO ── */
+      /* Hero */
       .quiz-hero {
         padding-top: 72px;
         background: var(--ink);
@@ -294,7 +294,7 @@
         color: oklch(100% 0 0 / 0.35);
       }
 
-      /* ── PROGRESS STRIP ── */
+      /* Progress */
       .progress-strip {
         background: oklch(18% 0.025 260);
         border-bottom: 1px solid oklch(100% 0 0 / 0.06);
@@ -341,7 +341,7 @@
         white-space: nowrap;
       }
 
-      /* ── MAIN QUIZ AREA ── */
+      /* Main */
       .quiz-main {
         padding: 3rem 0 5rem;
       }
@@ -355,12 +355,12 @@
         align-items: start;
       }
 
-      /* When leaderboard is active alongside info screen */
+      /* Info screen */
       .quiz-stage:has(.info-screen):has(.leaderboard-card.active) {
         grid-template-columns: minmax(500px, 1fr) minmax(440px, 520px);
       }
 
-      /* When only question/results card is shown */
+      /* Question only */
       .quiz-stage:has(.question-card.active),
       .quiz-stage:has(.results-card.active) {
         grid-template-columns: 1fr;
@@ -479,7 +479,7 @@
         border-top: 1px solid var(--rule);
       }
 
-      /* Name input form */
+      /* Name form */
       .name-input-wrapper {
         margin-bottom: 1.5rem;
       }
@@ -965,7 +965,7 @@
         transform: translateY(-2px);
       }
 
-      /* ── LEADERBOARD ── */
+      /* Leaderboard */
       .leaderboard-card {
         background: white;
         border: 1.5px solid var(--rule);
@@ -1246,7 +1246,7 @@
         }
       }
 
-      /* ── KIOSK / PORTRAIT — Accessible touch overrides ── */
+      /* Touch overrides */
       @media (orientation: portrait), (max-width: 900px) {
         html {
           font-size: 19px;
@@ -1256,7 +1256,7 @@
           padding: 0 clamp(2rem, 5vw, 4.5rem);
         }
 
-        /* NAV */
+        /* Nav */
         .nav-inner {
           height: 84px;
         }
@@ -1284,7 +1284,7 @@
           height: 18px;
         }
 
-        /* HERO */
+        /* Hero */
         .quiz-hero-inner {
           grid-template-columns: 1fr;
           padding: 4.5rem 0 3.5rem;
@@ -1306,7 +1306,7 @@
           max-width: 100%;
         }
 
-        /* PROGRESS */
+        /* Progress */
         .progress-strip {
           padding: 0.9rem 0;
         }
@@ -1321,7 +1321,7 @@
           font-size: 0.82rem;
         }
 
-        /* INFO SCREEN */
+        /* Info */
         .info-screen-header {
           padding: 2.5rem 2.25rem 2.25rem;
         }
@@ -1365,7 +1365,7 @@
           justify-content: center;
         }
 
-        /* QUESTION CARD */
+        /* Question */
         .question-header {
           flex-direction: column-reverse;
           align-items: flex-start;

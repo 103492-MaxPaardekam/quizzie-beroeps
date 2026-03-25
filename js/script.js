@@ -1,7 +1,4 @@
-/* ===========================
-   QUIZZIE — Gemeente Otterdam
-   Interactive Functionality
-   =========================== */
+/* Quizzie JS */
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ─────────────────────────────────
@@ -33,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     navMobileBackdrop.addEventListener("click", closeMobileMenu);
   }
 
-  // Close mobile menu when clicking a link
+  // Close link click
   mobileLinks.forEach((link) => {
     link.addEventListener("click", () => {
       closeMobileMenu();
@@ -75,10 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateNavigation() {
     const scrollPosition = window.scrollY + 120;
 
-    // Add scrolled class to nav
+    // Scrolled class
     nav.classList.toggle("scrolled", window.scrollY > 20);
 
-    // Update active link
+    // Update active
     let currentSection = "";
     sections.forEach((section) => {
       const sectionTop = section.offsetTop;
@@ -114,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
-        // Stagger animation delays
+        // Stagger animations
         setTimeout(() => {
           entry.target.classList.add("visible");
         }, index * 100);
@@ -172,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Add ripple animation
+  // Ripple animation
   const style = document.createElement("style");
   style.textContent = `
     @keyframes ripple {
@@ -205,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 16);
   };
 
-  // Trigger counter when hero is visible
+  // Hero visibility
   setTimeout(() => {
     const values = [2, 20];
     statNumbers.forEach((stat, i) => {
@@ -221,13 +218,13 @@ document.addEventListener("DOMContentLoaded", () => {
      KEYBOARD ACCESSIBILITY
   ───────────────────────────────── */
   document.addEventListener("keydown", (e) => {
-    // Close mobile menu on escape
+    // Escape closes
     if (e.key === "Escape" && navElement.classList.contains("menu-open")) {
       closeMobileMenu();
       return;
     }
 
-    // Press 'q' to scroll to quizzes
+    // Q scrolls
     if (e.key === "q" && !e.ctrlKey && !e.metaKey) {
       const quizSection = document.querySelector("#quizzen");
       if (quizSection) {

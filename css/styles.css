@@ -1,13 +1,10 @@
-/* ===========================
-   QUIZZIE — Gemeente Otterdam
-   Premium Educational Platform
-   =========================== */
+/* Quizzie Styles */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 
-/* --- Design Tokens --- */
+/* Design Tokens */
 :root {
-  /* Brand Colors - Elegant & Professional */
+  /* Brand colors */
   --primary-50: #f0f9ff;
   --primary-100: #e0f2fe;
   --primary-200: #bae6fd;
@@ -19,7 +16,7 @@
   --primary-800: #075985;
   --primary-900: #0c4a6e;
 
-  /* Secondary - Deep Indigo */
+  /* Secondary */
   --secondary-50: #eef2ff;
   --secondary-100: #e0e7ff;
   --secondary-200: #c7d2fe;
@@ -31,7 +28,7 @@
   --secondary-800: #3730a3;
   --secondary-900: #312e81;
 
-  /* Accent Colors */
+  /* Accent */
   --accent-emerald: #10b981;
   --accent-emerald-dark: #059669;
   --accent-sky: #0ea5e9;
@@ -39,7 +36,7 @@
   --accent-amber: #f59e0b;
   --accent-rose: #f43f5e;
 
-  /* Neutrals - Warmer grays */
+  /* Neutrals */
   --gray-50: #fafaf9;
   --gray-100: #f5f5f4;
   --gray-200: #e7e5e4;
@@ -51,13 +48,13 @@
   --gray-800: #292524;
   --gray-900: #1c1917;
 
-  /* Semantic Colors */
+  /* Semantic */
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
   --info: #0ea5e9;
 
-  /* Spacing Scale */
+  /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
@@ -67,7 +64,8 @@
   --space-3xl: 64px;
 
   /* Typography */
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+  --font-sans:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
     sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -89,13 +87,14 @@
 
   /* Shadows */
   --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-sm:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
   /* Transitions */
@@ -105,7 +104,7 @@
   --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* --- Reset & Base --- */
+/* Reset */
 *,
 *::before,
 *::after {
@@ -145,7 +144,7 @@ button {
   cursor: pointer;
 }
 
-/* --- Container --- */
+/* Container */
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -158,7 +157,7 @@ button {
   }
 }
 
-/* --- Navigation --- */
+/* Navigation */
 nav {
   position: sticky;
   top: 0;
@@ -270,7 +269,7 @@ nav.scrolled {
   display: none;
 }
 
-/* --- Hero Section --- */
+/* Hero Section */
 .hero {
   position: relative;
   background: linear-gradient(135deg, #0284c7 0%, #f43f5e 50%, #10b981 100%);
@@ -283,7 +282,8 @@ nav.scrolled {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       circle at 20% 50%,
       rgba(255, 255, 255, 0.1) 0%,
       transparent 50%
@@ -400,7 +400,7 @@ nav.scrolled {
   font-weight: 500;
 }
 
-/* --- Buttons --- */
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -485,7 +485,7 @@ nav.scrolled {
   transform: translateX(2px);
 }
 
-/* --- Sections --- */
+/* Sections */
 section {
   padding: 100px 0;
   position: relative;
@@ -533,7 +533,7 @@ section {
   font-weight: 500;
 }
 
-/* --- Info Section --- */
+/* Info Section */
 #info {
   background: white;
   position: relative;
@@ -639,7 +639,7 @@ section {
   font-size: var(--font-size-base);
 }
 
-/* --- Quiz Cards --- */
+/* Quiz Cards */
 .quiz-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -785,7 +785,7 @@ section {
   border-color: var(--gray-200);
 }
 
-/* --- Team Section --- */
+/* Team */
 #team {
   background: white;
   position: relative;
@@ -894,7 +894,7 @@ section {
   z-index: 1;
 }
 
-/* --- Footer --- */
+/* Footer */
 footer {
   background: var(--gray-900);
   color: white;
@@ -974,11 +974,13 @@ footer::before {
   }
 }
 
-/* --- Scroll Animations --- */
+/* Scroll Animations */
 .fade-in {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
 }
 
 .fade-in.visible {
@@ -986,7 +988,7 @@ footer::before {
   transform: translateY(0);
 }
 
-/* --- Responsive Design --- */
+/* Responsive */
 @media (max-width: 1024px) {
   .quiz-grid {
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -1043,7 +1045,7 @@ footer::before {
   }
 }
 
-/* Large Desktop (1440px+) */
+/* Large Desktop */
 @media (min-width: 1440px) {
   .container {
     max-width: 1440px;
@@ -1054,7 +1056,7 @@ footer::before {
   }
 }
 
-/* Desktop (1024px - 1440px) */
+/* Desktop */
 @media (max-width: 1440px) {
   :root {
     --space-3xl: 56px;
@@ -1065,7 +1067,7 @@ footer::before {
   }
 }
 
-/* Tablet Landscape (768px - 1024px) */
+/* Tablet Landscape */
 @media (max-width: 1024px) {
   :root {
     font-size: 15px;
@@ -1094,7 +1096,7 @@ footer::before {
   }
 }
 
-/* Tablet Portrait (600px - 768px) */
+/* Tablet Portrait */
 @media (max-width: 768px) {
   :root {
     font-size: 14px;
@@ -1254,7 +1256,7 @@ footer::before {
   }
 }
 
-/* Mobile Landscape (480px - 600px) */
+/* Mobile Landscape */
 @media (max-width: 600px) {
   .hero-stats {
     flex-direction: column;
@@ -1271,7 +1273,7 @@ footer::before {
   }
 }
 
-/* Mobile Portrait (320px - 480px) */
+/* Mobile Portrait */
 @media (max-width: 480px) {
   :root {
     --space-lg: 16px;
@@ -1459,7 +1461,7 @@ footer::before {
   }
 }
 
-/* Extra Small Mobile (< 360px) */
+/* Extra Small */
 @media (max-width: 360px) {
   .hero h1 {
     font-size: 1.75rem;
@@ -1483,9 +1485,9 @@ footer::before {
   }
 }
 
-/* Touch Device Optimizations */
+/* Touch Devices */
 @media (hover: none) and (pointer: coarse) {
-  /* Larger touch targets */
+  /* Touch targets */
   .btn {
     min-height: 48px;
     padding: 14px 24px;
@@ -1496,14 +1498,14 @@ footer::before {
     padding: 12px 20px;
   }
 
-  /* Disable hover effects on touch devices */
+  /* Disable hover */
   .quiz-card:hover,
   .step-card:hover,
   .team-card:hover {
     transform: none;
   }
 
-  /* Active states instead of hover */
+  /* Active states */
   .quiz-card:active:not(.disabled) {
     transform: scale(0.98);
     transition: transform 0.1s ease;
@@ -1514,7 +1516,7 @@ footer::before {
   }
 }
 
-/* Landscape Mobile Adjustments */
+/* Landscape Mobile */
 @media (max-width: 900px) and (orientation: landscape) {
   .hero {
     padding: var(--space-lg) 0;
@@ -1539,7 +1541,7 @@ footer::before {
   }
 }
 
-/* High Resolution Displays */
+/* High Resolution */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   body {
     -webkit-font-smoothing: antialiased;
@@ -1554,7 +1556,7 @@ footer::before {
   }
 }
 
-/* Reduced Motion for Accessibility */
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1573,7 +1575,7 @@ footer::before {
   }
 }
 
-/* Dark Mode Support (Optional) */
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
   /* Keep light theme for now as it's a municipality site,
      but structure is ready for dark mode if needed */

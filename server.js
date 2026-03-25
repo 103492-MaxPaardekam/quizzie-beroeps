@@ -1,7 +1,4 @@
-/* ===========================
-   QUIZZIE BACKEND SERVER
-   MongoDB + Express API
-   =========================== */
+/* Quizzie Backend */
 
 require("dotenv").config();
 const express = require("express");
@@ -15,12 +12,10 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname)); // Serve static files (HTML, CSS, JS)
+app.use(express.static(__dirname));
 
-// MongoDB Connection
-// Replace with your MongoDB connection string
-// For local: 'mongodb://localhost:27017/quizzie'
-// For Atlas: 'mongodb+srv://username:password@cluster.mongodb.net/quizzie'
+// MongoDB
+// Connection string
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/quizzie";
 
@@ -29,7 +24,7 @@ mongoose
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// Score Schema
+// Schema
 const scoreSchema = new mongoose.Schema({
   quizId: {
     type: String,
@@ -63,7 +58,7 @@ const scoreSchema = new mongoose.Schema({
   },
 });
 
-// Compound index for efficient queries
+// Index
 scoreSchema.index({ quizId: 1, userName: 1 });
 scoreSchema.index({ quizId: 1, percentage: -1, timestamp: -1 });
 
@@ -100,12 +95,12 @@ app.get("/api/leaderboard/:quizId", async (req, res) => {
     const { quizId } = req.params;
     const limit = parseInt(req.query.limit) || 10;
 
-    // Aggregate to get only the best score per user
+    // Best scores
     const leaderboard = await Score.aggregate([
       { $match: { quizId } },
-      // Sort by percentage desc, timestamp desc
+      // Sort desc
       { $sort: { percentage: -1, timestamp: -1 } },
-      // Group by user, keeping only the best score
+      // Group users
       {
         $group: {
           _id: { $toLower: { $trim: { input: "$userName" } } },
@@ -116,7 +111,7 @@ app.get("/api/leaderboard/:quizId", async (req, res) => {
           timestamp: { $first: "$timestamp" },
         },
       },
-      // Sort again after grouping
+      // Sort again
       { $sort: { percentage: -1, timestamp: -1 } },
       { $limit: limit },
     ]);
@@ -136,7 +131,7 @@ app.post("/api/scores", async (req, res) => {
   try {
     const { quizId, userName, score, total, percentage } = req.body;
 
-    // Validation
+    // Validate
     if (
       !quizId ||
       !userName ||
@@ -163,7 +158,7 @@ app.post("/api/scores", async (req, res) => {
 
     const normalizedName = userName.toLowerCase().trim();
 
-    // Find existing best score for this user on this quiz
+    // Find best
     const existingScore = await Score.findOne({
       quizId,
       userName: { $regex: new RegExp("^" + normalizedName + "$", "i") },
@@ -174,11 +169,11 @@ app.post("/api/scores", async (req, res) => {
       isHighScore: false,
     };
 
-    // If user has no previous score OR new score is higher
+    // Higher score
     if (!existingScore || percentage > existingScore.percentage) {
       const newScore = new Score({
         quizId,
-        userName: userName.trim(), // Keep original capitalization
+        userName: userName.trim(),
         score,
         total,
         percentage,
@@ -241,7 +236,7 @@ app.delete("/api/scores/:quizId", async (req, res) => {
   }
 });
 
-// Health check endpoint
+// Health check
 app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
@@ -251,7 +246,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Start server
+// Start
 app.listen(PORT, () => {
   console.log(`🚀 Quizzie server running on http://localhost:${PORT}`);
   console.log(`📊 API available at http://localhost:${PORT}/api`);
