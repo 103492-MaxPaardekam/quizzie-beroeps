@@ -216,6 +216,113 @@
         color: var(--gold-deep);
       }
 
+      /* ─── MOBILE NAV TOGGLE ─── */
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 44px;
+        height: 44px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1002;
+        transition: transform 0.3s var(--ease-out-expo);
+      }
+
+      .nav-toggle:hover {
+        transform: scale(1.05);
+      }
+
+      .nav-toggle-bar {
+        width: 28px;
+        height: 3px;
+        background: white;
+        border-radius: 99px;
+        transition: all 0.3s var(--ease-out-expo);
+        transform-origin: center;
+      }
+
+      .nav.scrolled .nav-toggle-bar {
+        background: var(--ink);
+      }
+
+      .nav.menu-open .nav-toggle-bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      .nav.menu-open .nav-toggle-bar:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+
+      .nav.menu-open .nav-toggle-bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+
+      /* ─── MOBILE MENU OVERLAY ─── */
+      .nav-mobile-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(320px, 85vw);
+        background: var(--ink);
+        backdrop-filter: blur(20px);
+        z-index: 1001;
+        transform: translateX(100%);
+        transition: transform 0.4s var(--ease-out-expo);
+        box-shadow: -4px 0 24px oklch(0% 0 0 / 0.3);
+        display: none;
+      }
+
+      .nav.menu-open .nav-mobile-menu {
+        transform: translateX(0);
+      }
+
+      .nav-mobile-links {
+        list-style: none;
+        padding: 100px 0 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .nav-mobile-links a {
+        display: block;
+        padding: 18px 32px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: oklch(100% 0 0 / 0.7);
+        border-left: 3px solid transparent;
+        transition: all 0.25s;
+        letter-spacing: 0.01em;
+      }
+
+      .nav-mobile-links a:hover,
+      .nav-mobile-links a.active {
+        color: white;
+        background: oklch(100% 0 0 / 0.08);
+        border-left-color: var(--gold);
+      }
+
+      /* Mobile menu backdrop */
+      .nav-mobile-backdrop {
+        position: fixed;
+        inset: 0;
+        background: oklch(0% 0 0 / 0.6);
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s;
+      }
+
+      .nav.menu-open .nav-mobile-backdrop {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
       /* ============================================
          HERO — FULL HEIGHT, EDITORIAL ARCHITECTURE
          ============================================ */
@@ -1272,7 +1379,15 @@
         }
 
         .nav-links {
-          display: none; /* scroll nav links not needed on touch kiosk */
+          display: none; /* Hide desktop nav on mobile */
+        }
+
+        .nav-toggle {
+          display: flex; /* Show hamburger button */
+        }
+
+        .nav-mobile-menu {
+          display: block; /* Enable mobile menu */
         }
 
         /* ── HERO ── */
@@ -1852,8 +1967,27 @@
             <li><a href="#quizzen">Quizzen</a></li>
             <li><a href="#team">Team</a></li>
           </ul>
+          <button
+            class="nav-toggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+          >
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
         </div>
       </div>
+      <!-- Mobile Menu Overlay -->
+      <div class="nav-mobile-menu">
+        <ul class="nav-mobile-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#info">Hoe werkt het</a></li>
+          <li><a href="#quizzen">Quizzen</a></li>
+          <li><a href="#team">Team</a></li>
+        </ul>
+      </div>
+      <div class="nav-mobile-backdrop"></div>
     </nav>
 
     <!-- ══════════════════════════════

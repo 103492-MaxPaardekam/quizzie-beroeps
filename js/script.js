@@ -5,6 +5,49 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ─────────────────────────────────
+     MOBILE NAVIGATION TOGGLE
+  ───────────────────────────────── */
+  const navToggle = document.querySelector(".nav-toggle");
+  const navMobileBackdrop = document.querySelector(".nav-mobile-backdrop");
+  const navElement = document.querySelector(".nav");
+  const mobileLinks = document.querySelectorAll(".nav-mobile-links a");
+
+  function toggleMobileMenu() {
+    const isOpen = navElement.classList.contains("menu-open");
+    navElement.classList.toggle("menu-open");
+    navToggle.setAttribute("aria-expanded", !isOpen);
+    document.body.style.overflow = isOpen ? "" : "hidden";
+  }
+
+  function closeMobileMenu() {
+    navElement.classList.remove("menu-open");
+    navToggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+
+  if (navToggle) {
+    navToggle.addEventListener("click", toggleMobileMenu);
+  }
+
+  if (navMobileBackdrop) {
+    navMobileBackdrop.addEventListener("click", closeMobileMenu);
+  }
+
+  // Close mobile menu when clicking a link
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      closeMobileMenu();
+    });
+  });
+
+  // Close menu on escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navElement.classList.contains("menu-open")) {
+      closeMobileMenu();
+    }
+  });
+
+  /* ─────────────────────────────────
      SMOOTH SCROLL NAVIGATION
   ───────────────────────────────── */
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -32,6 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
   ───────────────────────────────── */
   const nav = document.querySelector("nav");
   const navLinks = document.querySelectorAll(".nav-links a");
+  const mobileNavLinks = document.querySelectorAll(".nav-mobile-links a");
+  const allNavLinks = [...navLinks, ...mobileNavLinks];
   const sections = document.querySelectorAll("section[id]");
 
   function updateNavigation() {
@@ -54,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    navLinks.forEach((link) => {
+    allNavLinks.forEach((link) => {
       link.classList.remove("active");
       if (link.getAttribute("href") === `#${currentSection}`) {
         link.classList.add("active");
@@ -183,6 +228,12 @@ document.addEventListener("DOMContentLoaded", () => {
      KEYBOARD ACCESSIBILITY
   ───────────────────────────────── */
   document.addEventListener("keydown", (e) => {
+    // Close mobile menu on escape
+    if (e.key === "Escape" && navElement.classList.contains("menu-open")) {
+      closeMobileMenu();
+      return;
+    }
+
     // Press 'q' to scroll to quizzes
     if (e.key === "q" && !e.ctrlKey && !e.metaKey) {
       const quizSection = document.querySelector("#quizzen");
